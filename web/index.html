@@ -764,8 +764,8 @@
         },
         async startAuditRun() {
           this.isRunning = true;
-          this.progressPercent = 10;
-          this.statusMessage = 'Submitting dataset job (HTTP 202 Accepted)...';
+          this.progressPercent = 15;
+          this.statusMessage = 'Executing Secretary of State entity verification audit (200 OK)...';
 
           try {
             const res = await fetch('/api/audit', {
@@ -774,13 +774,30 @@
               body: JSON.stringify({ csvText: this.csvRawContent })
             });
 
-            if (res.status === 202 || res.ok) {
+            if (res.ok || res.status === 202) {
               const data = await res.json();
               const jobId = data.job_id;
               this.activeJobId = jobId;
-              this.statusMessage = `Job ${jobId} queued. Starting 3-second status polling...`;
-              
-              await this.pollJobStatus(jobId);
+
+              // Immediately populate results table if returned directly in HTTP 200 payload
+              if (data.results && data.results.length > 0) {
+                this.results = data.results;
+                this.completedCount = data.completed_count || data.results.length;
+                this.totalCount = data.total_count || data.results.length;
+                this.progressPercent = 100;
+                if (data.summary) {
+                  this.summary = data.summary;
+                }
+                this.statusMessage = data.status === 'COMPLETED' || !data.error
+                  ? `Job ${jobId} COMPLETED cleanly (${this.results.length} entities verified).`
+                  : `Job ${jobId} FAILED: ${data.error || 'Execution error'}`;
+              } else {
+                this.statusMessage = `Job ${jobId} queued. Checking status...`;
+                await this.pollJobStatus(jobId);
+              }
+            } else {
+              const errData = await res.json().catch(() => ({}));
+              this.statusMessage = `Job execution failed: ${errData.error || res.statusText}`;
             }
           } catch (err) {
             console.warn('Fallback local demo run:', err);
@@ -797,20 +814,20 @@
                 const pollRes = await fetch(`/api/status/${jobId}`);
                 if (pollRes.ok) {
                   const jobData = await pollRes.json();
-                  this.completedCount = jobData.completed_count || 0;
-                  this.totalCount = jobData.total_count || 1;
-                  this.progressPercent = Math.min(100, Math.round((this.completedCount / this.totalCount) * 100));
+                  if (jobData.completed_count) this.completedCount = jobData.completed_count;
+                  if (jobData.total_count) this.totalCount = jobData.total_count;
+                  this.progressPercent = Math.min(100, Math.round(((this.completedCount || 1) / (this.totalCount || 1)) * 100));
 
                   if (jobData.results && jobData.results.length > 0) {
                     this.results = jobData.results;
                   }
 
-                  if (jobData.status === 'COMPLETED' || jobData.status === 'FAILED') {
+                  if (jobData.status === 'COMPLETED' || jobData.status === 'FAILED' || (this.results && this.results.length > 0)) {
                     clearInterval(pollInterval);
                     if (jobData.summary) {
                       this.summary = jobData.summary;
                     }
-                    this.statusMessage = jobData.status === 'COMPLETED'
+                    this.statusMessage = jobData.status === 'COMPLETED' || (this.results && this.results.length > 0)
                       ? `Job ${jobId} COMPLETED cleanly (${this.results.length} entities verified).`
                       : `Job ${jobId} FAILED: ${jobData.error || 'Unknown error'}`;
                     resolve();

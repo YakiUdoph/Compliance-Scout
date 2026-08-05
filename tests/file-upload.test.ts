@@ -19,7 +19,7 @@ async function runFileUploadTest() {
     });
     const dataCsv = await resCsv.json();
     console.log(`Response for csvText payload (HTTP ${resCsv.status}):`, dataCsv);
-    if (resCsv.status !== 202 || !dataCsv.job_id) {
+    if (resCsv.status !== 200 || !dataCsv.job_id || !dataCsv.results) {
       throw new Error(`CSV payload test failed with status ${resCsv.status}`);
     }
 
@@ -32,7 +32,7 @@ async function runFileUploadTest() {
     });
     const dataTxt = await resTxt.json();
     console.log(`Response for text payload (HTTP ${resTxt.status}):`, dataTxt);
-    if (resTxt.status !== 202 || !dataTxt.job_id) {
+    if (resTxt.status !== 200 || !dataTxt.job_id || !dataTxt.results) {
       throw new Error(`TXT payload test failed with status ${resTxt.status}`);
     }
 
@@ -49,7 +49,7 @@ async function runFileUploadTest() {
     });
     const dataFileTxt = await resFileTxt.json();
     console.log(`Response for file.originalname .txt payload (HTTP ${resFileTxt.status}):`, dataFileTxt);
-    if (resFileTxt.status !== 202 || !dataFileTxt.job_id) {
+    if (resFileTxt.status !== 200 || !dataFileTxt.job_id || !dataFileTxt.results) {
       throw new Error(`File .txt payload test failed with status ${resFileTxt.status}`);
     }
 
