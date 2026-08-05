@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" :class="darkMode ? 'dark' : ''" x-data="complianceApp()">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ComplianceScout — Automated Legal & Corporate Compliance Engine</title>
-  <meta name="description" content="Autonomous Secretary of State compliance audit engine powered by Coasty computer-use agents and native TypeScript status normalization.">
+  <title>ComplianceScout — Global Enterprise Entity Verification Platform</title>
+  <meta name="description" content="Global Enterprise Entity Verification & Automated Compliance Inspection Platform powered by Coasty computer-use agents and native TypeScript status normalization.">
   
   <!-- Tailwind CSS & Alpine.js CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,11 +33,6 @@
               600: '#059669',
               900: '#064e3b'
             }
-          },
-          boxShadow: {
-            'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.3)',
-            'glow-rose': '0 0 25px -5px rgba(244, 63, 94, 0.3)',
-            'glow-indigo': '0 0 25px -5px rgba(99, 102, 241, 0.3)'
           }
         }
       }
@@ -45,94 +40,97 @@
   </script>
 
   <style>
-    /* Glassmorphism Surface Token */
     .glass-panel {
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .glass-card-interactive {
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .glass-card-interactive:hover {
-      border-color: rgba(16, 185, 129, 0.35);
-      transform: translateY(-3px);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.15);
-    }
     .gradient-text-hero {
-      background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 40%, #34d399 70%, #6366f1 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #059669 45%, #2563eb 80%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .gradient-border-box {
-      position: relative;
-      background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(99,102,241,0.2));
-      padding: 1px;
-      border-radius: 1rem;
+    .dark .gradient-text-hero {
+      background: linear-gradient(135deg, #ffffff 0%, #34d399 45%, #60a5fa 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #020617;
+      background: transparent;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #1e293b;
+      background: rgba(148, 163, 184, 0.4);
       border-radius: 9999px;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen custom-scrollbar relative overflow-x-hidden" x-data="complianceApp()">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased min-h-screen custom-scrollbar relative overflow-x-hidden transition-colors duration-300">
 
-  <!-- Ambient Backdrop Background Glow Effects -->
-  <div class="fixed top-0 left-1/3 -z-10 w-[700px] h-[700px] bg-emerald-500/10 rounded-full blur-[150px] pointer-events-none"></div>
-  <div class="fixed bottom-0 right-1/4 -z-10 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[160px] pointer-events-none"></div>
+  <!-- Translucent Background Layer (Tech Team Image + Theme Mask) -->
+  <div class="fixed inset-0 -z-20 bg-cover bg-center bg-no-repeat pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80');"></div>
+  <div class="fixed inset-0 -z-10 bg-slate-50/92 dark:bg-slate-950/94 backdrop-blur-md transition-colors duration-300 pointer-events-none"></div>
 
   <!-- Navigation Bar -->
-  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-2xl border-b border-slate-800/80">
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
-      <!-- Brand & Custom Shield Radar Logo -->
+      <!-- Brand & Geometric Shield Node Logo -->
       <div class="flex items-center space-x-4">
-        <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-indigo-500 p-0.5 shadow-lg shadow-emerald-500/20 group">
-          <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center relative overflow-hidden">
-            <!-- Radar Scan Pulse Animation Line -->
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/20 to-transparent translate-y-[-100%] group-hover:translate-y-[100%] transition-transform duration-1000 ease-in-out"></div>
-            <!-- Custom Shield Inline SVG Mark -->
-            <svg class="w-6 h-6 text-emerald-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-indigo-600 p-0.5 shadow-lg shadow-emerald-500/20 group">
+          <div class="w-full h-full bg-white dark:bg-slate-950 rounded-[14px] flex items-center justify-center relative overflow-hidden transition-colors duration-300">
+            <!-- Global Geometric Shield Intersecting Node Grid SVG -->
+            <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+              <circle cx="12" cy="12" r="3" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v6m-3-3h6"/>
             </svg>
           </div>
         </div>
 
         <div>
           <div class="flex items-center space-x-2.5">
-            <span class="text-xl font-extrabold tracking-tight text-white">ComplianceScout</span>
-            <span class="px-2 py-0.5 text-[10px] font-mono font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">v1.0.0</span>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">ComplianceScout</span>
+            <span class="px-2.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Enterprise v1.0</span>
           </div>
-          <p class="text-xs text-slate-400 font-mono flex items-center gap-2 mt-0.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Backend Operational • Coasty REST Engine
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-mono flex items-center gap-2 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Global Backend Operational • Coasty REST Engine
           </p>
         </div>
       </div>
 
-      <!-- Action Navigation Buttons -->
+      <!-- Action Navigation & Theme Toggle -->
       <div class="flex items-center space-x-4">
-        <a href="#audit-section" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-mono border border-slate-800 transition-all">
-          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          Run Live Audit
+        <!-- Light / Dark Mode Toggle Button -->
+        <button @click="darkMode = !darkMode" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all flex items-center gap-2 text-xs font-mono">
+          <template x-if="!darkMode">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Light Mode
+            </span>
+          </template>
+          <template x-if="darkMode">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+              Dark Mode
+            </span>
+          </template>
+        </button>
+
+        <a href="#jurisdictions" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+          Global Coverage
         </a>
-        <button @click="downloadReportPdf()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-500 hover:shadow-lg hover:shadow-emerald-500/25 text-slate-950 font-bold text-xs shadow-md transition-all flex items-center gap-2">
+        <button @click="downloadReportPdf()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-md hover:shadow-lg hover:shadow-emerald-500/25 transition-all flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
-          Download Report PDF
+          Export Report PDF
         </button>
       </div>
 
@@ -140,113 +138,156 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="max-w-7xl mx-auto px-6 pt-16 pb-10 text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs font-mono text-emerald-400 mb-6 shadow-xl">
-      <svg class="w-4 h-4 text-emerald-400 animate-spin" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-      </svg>
-      Coasty $500 Contest Entry • Verifiable Run Logs
+  <section class="max-w-7xl mx-auto px-6 pt-14 pb-8 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs font-mono text-emerald-700 dark:text-emerald-400 mb-6 shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+      Global Enterprise Entity Verification & Automated Compliance Inspection Platform
     </div>
 
-    <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.15]">
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-[1.15]">
       Automated Legal & Corporate <br>
-      <span class="gradient-text-hero">Compliance Engine</span>
-    </h2>
+      <span class="gradient-text-hero">Compliance Inspection Engine</span>
+    </h1>
 
-    <p class="mt-5 text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-      Autonomous Secretary of State entity verification across <strong class="text-emerald-400 font-medium">Delaware, California, New York, Texas, and Florida</strong> portals using Coasty browser agents and native TypeScript parsing.
+    <p class="mt-5 text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
+      Continuous autonomous Secretary of State & international commercial registry verification. Driven by Coasty computer-use agents with zero external LLM latency via native TypeScript normalization.
     </p>
-
-    <!-- State Coverage Badges -->
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <span class="px-4 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
-        <span class="font-bold text-emerald-400">DE</span> Delaware ICIS
-      </span>
-      <span class="px-4 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
-        <span class="font-bold text-blue-400">CA</span> California bizfile
-      </span>
-      <span class="px-4 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
-        <span class="font-bold text-amber-400">NY</span> New York DOS
-      </span>
-      <span class="px-4 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
-        <span class="font-bold text-rose-400">TX</span> Texas CPA
-      </span>
-      <span class="px-4 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-2">
-        <span class="font-bold text-teal-400">FL</span> Florida Sunbiz
-      </span>
-    </div>
   </section>
 
   <!-- Metric Glass Cards Section -->
-  <section class="max-w-7xl mx-auto px-6 py-6">
+  <section class="max-w-7xl mx-auto px-6 py-4">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       
       <!-- Total Audited -->
-      <div class="glass-panel glass-card-hoverable rounded-2xl p-6 border border-slate-800 relative overflow-hidden group">
-        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-all"></div>
+      <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-emerald-500/40 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-slate-400 tracking-wider">Total Audited</p>
-          <div class="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p class="text-xs font-mono font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">Total Audited</p>
+          <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
             </svg>
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-white" x-text="summary.totalProcessed"></span>
-          <span class="text-xs font-mono text-indigo-400 font-semibold">100% Parsed</span>
+          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="summary.totalProcessed"></span>
+          <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">100% Verified</span>
         </div>
       </div>
 
       <!-- In Good Standing -->
-      <div class="glass-panel glass-card-hoverable rounded-2xl p-6 border border-emerald-900/40 relative overflow-hidden group">
-        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all"></div>
+      <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-emerald-500/30 dark:border-emerald-900/40 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-emerald-400 tracking-wider">Good Standing</p>
-          <div class="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p class="text-xs font-mono font-semibold uppercase text-emerald-700 dark:text-emerald-400 tracking-wider">Good Standing</p>
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
             </svg>
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-emerald-400" x-text="summary.goodStandingCount"></span>
-          <span class="text-xs font-mono text-emerald-400/80">Certificates Ready</span>
+          <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="summary.goodStandingCount"></span>
+          <span class="text-xs font-mono text-emerald-700 dark:text-emerald-400">Certificates Ready</span>
         </div>
       </div>
 
       <!-- Delinquent / Action Required -->
-      <div class="glass-panel glass-card-hoverable rounded-2xl p-6 border border-rose-900/40 relative overflow-hidden group">
-        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-rose-500/10 rounded-full blur-xl group-hover:bg-rose-500/20 transition-all"></div>
+      <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-rose-500/30 dark:border-rose-900/40 shadow-sm hover:shadow-md hover:border-rose-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-rose-400 tracking-wider">Delinquent</p>
-          <div class="w-8 h-8 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p class="text-xs font-mono font-semibold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Delinquent</p>
+          <div class="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-rose-400" x-text="summary.delinquentCount + summary.forfeitedCount"></span>
-          <span class="text-xs font-mono text-rose-400 font-bold" x-text="summary.totalOwedFormatted + ' Owed'"></span>
+          <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="summary.delinquentCount + summary.forfeitedCount"></span>
+          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="summary.totalOwedFormatted + ' Owed'"></span>
         </div>
       </div>
 
       <!-- Computer-Use Steps -->
-      <div class="glass-panel glass-card-hoverable rounded-2xl p-6 border border-amber-900/40 relative overflow-hidden group">
-        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all"></div>
+      <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-amber-500/30 dark:border-amber-900/40 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-amber-400 tracking-wider">Coasty Steps</p>
-          <div class="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p class="text-xs font-mono font-semibold uppercase text-amber-600 dark:text-amber-400 tracking-wider">Coasty Micro-Steps</p>
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-amber-400" x-text="summary.totalAutomatedSteps"></span>
-          <span class="text-xs font-mono text-slate-400">50+ Micro-Steps</span>
+          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="summary.totalAutomatedSteps"></span>
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">50+ Micro-Steps</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Global Coverage & Jurisdiction Hub Carousel Section -->
+  <section id="jurisdictions" class="max-w-7xl mx-auto px-6 py-8">
+    <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm relative overflow-hidden">
+      
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+            🌍 Global Coverage & Jurisdiction Hub
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Multi-state Secretary of State & international business register inspection targets</p>
+        </div>
+
+        <!-- Next / Prev Controls -->
+        <div class="flex items-center space-x-2">
+          <button @click="prevSlide()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-500 hover:text-white transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button @click="nextSlide()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-500 hover:text-white transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide Display Container -->
+      <div class="relative h-80 rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-800 group">
+        <template x-for="(slide, idx) in slides" :key="idx">
+          <div 
+            x-show="activeSlide === idx" 
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="absolute inset-0 bg-cover bg-center flex flex-col justify-end p-8"
+            :style="'background-image: url(' + slide.imageUrl + ');'"
+          >
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+            
+            <div class="relative z-10 space-y-2 max-w-2xl">
+              <div class="flex items-center space-x-2">
+                <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500 text-slate-950 shadow-md" x-text="slide.tag"></span>
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-white/20 backdrop-blur-md text-white border border-white/30" x-text="slide.region"></span>
+              </div>
+              <h3 class="text-3xl font-extrabold text-white" x-text="slide.title"></h3>
+              <p class="text-sm text-slate-200 leading-relaxed font-light" x-text="slide.description"></p>
+            </div>
+          </div>
+        </template>
+
+        <!-- Slide Indicators -->
+        <div class="absolute bottom-4 right-6 z-20 flex space-x-2">
+          <template x-for="(slide, idx) in slides" :key="idx">
+            <button 
+              @click="activeSlide = idx" 
+              :class="activeSlide === idx ? 'w-8 bg-emerald-400' : 'w-2 bg-white/40'" 
+              class="h-2 rounded-full transition-all duration-300"
+            ></button>
+          </template>
         </div>
       </div>
 
@@ -255,19 +296,19 @@
 
   <!-- Interactive Drag & Drop Audit Control Panel -->
   <section id="audit-section" class="max-w-7xl mx-auto px-6 py-6">
-    <div class="glass-panel rounded-3xl p-8 border border-slate-800 shadow-2xl">
+    <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
         <!-- Left Column: Drag & Drop CSV Uploader -->
         <div class="lg:col-span-5 space-y-6 flex flex-col justify-between">
           <div>
-            <h3 class="text-xl font-bold text-white flex items-center gap-2">
-              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
               </svg>
               Upload Entity Dataset
             </h3>
-            <p class="text-xs text-slate-400 mt-1">Select or drop a CSV dataset to initiate browser automation</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Select or drop a CSV dataset to initiate browser automation</p>
           </div>
 
           <!-- Interactive Drag & Drop Box -->
@@ -275,32 +316,32 @@
             @dragover.prevent="isDragging = true"
             @dragleave.prevent="isDragging = false"
             @drop.prevent="handleFileDrop($event)"
-            :class="isDragging ? 'border-emerald-500 bg-emerald-500/10 scale-[1.01]' : 'border-slate-800 bg-slate-950/80'"
+            :class="isDragging ? 'border-emerald-500 bg-emerald-500/10' : 'border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80'"
             class="border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer hover:border-emerald-500/50 group"
             @click="$refs.fileInput.click()"
           >
             <input type="file" x-ref="fileInput" @change="handleFileSelect($event)" accept=".csv" class="hidden">
             
-            <div class="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 mx-auto flex items-center justify-center text-emerald-400 mb-3 group-hover:scale-110 transition-transform">
+            <div class="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mx-auto flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-3 group-hover:scale-110 transition-transform shadow-sm">
               <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
               </svg>
             </div>
             
-            <p class="text-xs font-semibold text-slate-200" x-text="uploadedFileName || 'Drop businesses.csv here or click to browse'"></p>
+            <p class="text-xs font-semibold text-slate-800 dark:text-slate-200" x-text="uploadedFileName || 'Drop businesses.csv here or click to browse'"></p>
             <p class="text-[10px] text-slate-500 font-mono mt-1.5">Required Headers: business_name, state, entity_number</p>
           </div>
 
           <!-- Audit Action Buttons -->
           <div class="flex items-center space-x-3 pt-2">
-            <button @click="loadPresetData()" class="flex-1 py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono font-medium text-slate-300 hover:border-slate-700 hover:text-white transition-all flex items-center justify-center gap-2">
-              📄 Preset Dataset
+            <button @click="loadPresetData()" class="flex-1 py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-medium text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex items-center justify-center gap-2">
+              📄 Sample Dataset
             </button>
 
-            <button @click="startAuditRun()" :disabled="isRunning" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-500 hover:shadow-lg hover:shadow-emerald-500/25 text-slate-950 font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+            <button @click="startAuditRun()" :disabled="isRunning" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:shadow-lg hover:shadow-emerald-500/25 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50">
               <span x-show="!isRunning">⚡ Execute Live Audit</span>
               <span x-show="isRunning" class="flex items-center gap-2">
-                <svg class="w-4 h-4 animate-spin text-slate-950" fill="none" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                 </svg>
@@ -311,33 +352,33 @@
         </div>
 
         <!-- Right Column: Live Coasty Telemetry Stream -->
-        <div class="lg:col-span-7 bg-slate-950/90 rounded-2xl p-6 border border-slate-800 space-y-5 flex flex-col justify-between">
-          <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+        <div class="lg:col-span-7 bg-slate-100/80 dark:bg-slate-950/90 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-5 flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-4">
             <div>
-              <h4 class="text-sm font-bold text-white flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400" :class="isRunning ? 'animate-ping' : ''"></span>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500" :class="isRunning ? 'animate-ping' : ''"></span>
                 Coasty Agent Live Telemetry Stream
               </h4>
-              <p class="text-xs text-slate-400 font-mono mt-0.5" x-text="statusMessage"></p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="statusMessage"></p>
             </div>
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300" x-text="completedCount + ' / ' + totalCount + ' Audited'"></span>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300" x-text="completedCount + ' / ' + totalCount + ' Audited'"></span>
           </div>
 
           <!-- Telemetry Animated Progress Bar -->
-          <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800/80">
-            <div class="bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500 h-full rounded-full transition-all duration-300 shadow-glow-emerald" :style="'width: ' + progressPercent + '%'"></div>
+          <div class="w-full bg-slate-200 dark:bg-slate-900 h-3 rounded-full overflow-hidden p-0.5 border border-slate-300 dark:border-slate-800">
+            <div class="bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 h-full rounded-full transition-all duration-300" :style="'width: ' + progressPercent + '%'"></div>
           </div>
 
           <!-- Scrollable Live Telemetry Step Feed -->
-          <div class="h-48 overflow-y-auto font-mono text-[11px] space-y-2 custom-scrollbar bg-slate-950/80 rounded-xl p-4 border border-slate-800/80">
+          <div class="h-48 overflow-y-auto font-mono text-[11px] space-y-2 custom-scrollbar bg-white dark:bg-slate-950/80 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
             <template x-for="(log, idx) in activeStepLogs" :key="idx">
-              <div class="flex items-start gap-3 text-slate-300 border-b border-slate-800/40 pb-2 transition-all">
-                <span class="text-emerald-400 font-bold shrink-0" x-text="log.timestamp"></span>
-                <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-bold border border-slate-700 shrink-0" x-text="log.action || 'STEP'"></span>
-                <span class="flex-1 text-slate-200 truncate" x-text="log.message || log.description"></span>
+              <div class="flex items-start gap-3 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800/40 pb-2 transition-all">
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0" x-text="log.timestamp"></span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shrink-0" x-text="log.action || 'STEP'"></span>
+                <span class="flex-1 text-slate-800 dark:text-slate-200 truncate" x-text="log.message || log.description"></span>
               </div>
             </template>
-            <div x-show="activeStepLogs.length === 0" class="h-full flex items-center justify-center text-slate-500 italic">
+            <div x-show="activeStepLogs.length === 0" class="h-full flex items-center justify-center text-slate-400 dark:text-slate-500 italic">
               Live Coasty task step telemetry will log here in real time...
             </div>
           </div>
@@ -349,30 +390,30 @@
 
   <!-- Interactive Data Table & Filter Section -->
   <section class="max-w-7xl mx-auto px-6 py-6">
-    <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm">
       
       <!-- Table Filter Bar -->
-      <div class="p-6 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
             Compliance Audit Results
-            <span class="text-xs font-mono font-normal text-slate-400" x-text="'(' + filteredResults.length + ' entities)'"></span>
+            <span class="text-xs font-mono font-normal text-slate-500 dark:text-slate-400" x-text="'(' + filteredResults.length + ' entities)'"></span>
           </h3>
-          <p class="text-xs text-slate-400 mt-0.5">Verifiable standing and financial delinquency metrics across Secretary of State databases</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verifiable standing and financial delinquency metrics across Secretary of State & global business registers</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
           <!-- Status Filter Tabs -->
-          <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
-            <button @click="activeFilter = 'ALL'" :class="activeFilter === 'ALL' ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">All</button>
-            <button @click="activeFilter = 'GOOD_STANDING'" :class="activeFilter === 'GOOD_STANDING' ? 'bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30' : 'text-slate-400 hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">Good Standing</button>
-            <button @click="activeFilter = 'DELINQUENT'" :class="activeFilter === 'DELINQUENT' ? 'bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30' : 'text-slate-400 hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">Delinquent</button>
+          <div class="flex items-center bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono">
+            <button @click="activeFilter = 'ALL'" :class="activeFilter === 'ALL' ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold shadow-sm' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">All</button>
+            <button @click="activeFilter = 'GOOD_STANDING'" :class="activeFilter === 'GOOD_STANDING' ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-500/30' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">Good Standing</button>
+            <button @click="activeFilter = 'DELINQUENT'" :class="activeFilter === 'DELINQUENT' ? 'bg-rose-500/20 text-rose-700 dark:text-rose-400 font-bold border border-rose-500/30' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'" class="px-3.5 py-1.5 rounded-lg transition-all">Delinquent</button>
           </div>
 
           <!-- Search Query Input -->
           <div class="relative">
-            <input type="text" x-model="searchQuery" placeholder="Search business or state..." class="bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50 w-64">
-            <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <input type="text" x-model="searchQuery" placeholder="Search business or state..." class="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 dark:text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50 w-64">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
           </div>
@@ -382,7 +423,7 @@
       <!-- Responsive Results Table -->
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs font-mono">
-          <thead class="bg-slate-950/90 text-slate-400 uppercase tracking-wider border-b border-slate-800">
+          <thead class="bg-slate-100/80 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
             <tr>
               <th class="px-6 py-4">Business Entity</th>
               <th class="px-6 py-4">State</th>
@@ -392,26 +433,26 @@
               <th class="px-6 py-4 text-right">Actions & Artifacts</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-800/60">
+          <tbody class="divide-y divide-slate-200/80 dark:divide-slate-800/60">
             <template x-for="item in filteredResults" :key="item.id">
-              <tr class="hover:bg-slate-800/30 transition-colors group">
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
                 
                 <!-- Entity Name & Agency -->
                 <td class="px-6 py-4 font-sans">
-                  <div class="font-bold text-white text-sm" x-text="item.businessName"></div>
-                  <div class="text-[10px] text-slate-400 font-mono mt-0.5" x-text="item.stateAgency || item.state + ' Secretary of State'"></div>
+                  <div class="font-bold text-slate-900 dark:text-white text-sm" x-text="item.businessName"></div>
+                  <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="item.stateAgency || item.state + ' Secretary of State'"></div>
                 </td>
 
                 <!-- State Badge -->
                 <td class="px-6 py-4">
-                  <span class="px-2.5 py-1 rounded-md bg-slate-900 text-slate-200 font-bold border border-slate-800" x-text="item.state"></span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-800" x-text="item.state"></span>
                 </td>
 
                 <!-- Verifiable Coasty Task Run Link -->
                 <td class="px-6 py-4">
-                  <a :href="item.runUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-emerald-400 border border-slate-800 hover:border-emerald-500/30 transition-all font-mono font-bold">
+                  <a :href="item.runUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all font-mono font-bold">
                     <span x-text="item.taskId"></span>
-                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
                   </a>
@@ -420,35 +461,35 @@
                 <!-- Normalized Status Pill -->
                 <td class="px-6 py-4">
                   <template x-if="item.normalizedStatus === 'GOOD_STANDING'">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> GOOD STANDING
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 shadow-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> GOOD STANDING
                     </span>
                   </template>
                   <template x-if="item.normalizedStatus === 'DELINQUENT'">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span> DELINQUENT
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 shadow-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> DELINQUENT
                     </span>
                   </template>
                   <template x-if="item.normalizedStatus === 'FORFEITED'">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> FORFEITED
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 shadow-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> FORFEITED
                     </span>
                   </template>
                 </td>
 
                 <!-- Fees Owed -->
                 <td class="px-6 py-4 font-bold text-sm">
-                  <span x-text="item.amountOwed || '$0.00'" :class="item.amountOwed ? 'text-rose-400 font-extrabold' : 'text-slate-500'"></span>
+                  <span x-text="item.amountOwed || '$0.00'" :class="item.amountOwed ? 'text-rose-600 dark:text-rose-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'"></span>
                 </td>
 
                 <!-- Action Button Pills -->
                 <td class="px-6 py-4 text-right space-x-2">
-                  <button @click="openModal(item)" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs transition-all">
+                  <button @click="openModal(item)" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 text-xs transition-all">
                     🔍 Telemetry
                   </button>
 
                   <template x-if="item.certPdfPath">
-                    <a :href="item.certPdfPath" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 text-xs font-semibold transition-all">
+                    <a :href="item.certPdfPath" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 text-xs font-semibold transition-all">
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                       </svg>
@@ -457,7 +498,7 @@
                   </template>
 
                   <template x-if="!item.certPdfPath && item.filingUrl">
-                    <a :href="item.filingUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 text-xs font-semibold transition-all">
+                    <a :href="item.filingUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 text-xs font-semibold transition-all">
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                       </svg>
@@ -476,28 +517,28 @@
 
   <!-- Telemetry Detail Modal Popup -->
   <div x-show="selectedItem" x-transition.opacity class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-6" style="display: none;">
-    <div class="glass-panel rounded-3xl max-w-2xl w-full border border-slate-800 overflow-hidden shadow-2xl" @click.away="selectedItem = null">
-      <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl" @click.away="selectedItem = null">
+      <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
         <div>
-          <h4 class="text-lg font-bold text-white" x-text="selectedItem?.businessName"></h4>
-          <p class="text-xs text-slate-400 font-mono" x-text="'Audit ID: ' + selectedItem?.id + ' • State: ' + selectedItem?.state"></p>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white" x-text="selectedItem?.businessName"></h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-mono" x-text="'Audit ID: ' + selectedItem?.id + ' • State: ' + selectedItem?.state"></p>
         </div>
-        <button @click="selectedItem = null" class="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-white flex items-center justify-center">✕</button>
+        <button @click="selectedItem = null" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">✕</button>
       </div>
       <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar font-mono text-xs">
-        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-          <p class="text-slate-400 font-semibold">Native TS Parser Summary Note:</p>
-          <p class="text-emerald-400 font-sans" x-text="selectedItem?.summaryNote"></p>
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <p class="text-slate-500 dark:text-slate-400 font-semibold">Native TS Parser Summary Note:</p>
+          <p class="text-emerald-700 dark:text-emerald-400 font-sans" x-text="selectedItem?.summaryNote"></p>
         </div>
-        <h5 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Executed Coasty Actions:</h5>
+        <h5 class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Executed Coasty Actions:</h5>
         <div class="space-y-2">
           <template x-for="step in selectedItem?.executionSteps || []" :key="step.stepNumber">
-            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800/60">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <div class="flex items-center gap-2.5">
-                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold" x-text="'Step ' + step.stepNumber"></span>
-                <span class="text-slate-200 font-sans" x-text="step.description"></span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold" x-text="'Step ' + step.stepNumber"></span>
+                <span class="text-slate-800 dark:text-slate-200 font-sans" x-text="step.description"></span>
               </div>
-              <span class="text-slate-500 text-[10px]" x-text="step.action"></span>
+              <span class="text-slate-400 text-[10px]" x-text="step.action"></span>
             </div>
           </template>
         </div>
@@ -506,13 +547,14 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 font-mono">
-    <p>ComplianceScout — Autonomous Legal Tech Engine • Coasty REST API & Native TypeScript Parser</p>
+  <footer class="border-t border-slate-200/80 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400 font-mono transition-colors duration-300">
+    <p>ComplianceScout — Global Enterprise Entity Verification Platform • Coasty REST API & Native TypeScript Parser</p>
   </footer>
 
   <script>
     function complianceApp() {
       return {
+        darkMode: false, // Primary default theme is LIGHT MODE!
         isDragging: false,
         uploadedFileName: '',
         csvRawContent: null,
@@ -521,6 +563,44 @@
         totalCount: 5,
         progressPercent: 100,
         statusMessage: 'Execution complete (65 Coasty micro-steps verified)',
+        activeSlide: 0,
+        slides: [
+          {
+            title: 'Berlin / European Union Business Registry',
+            region: 'EU Jurisdiction',
+            tag: 'DE / EU Register',
+            imageUrl: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=1200&q=80',
+            description: 'Automated Handelsregister commercial register checks, EU VAT validation, and corporate transparency directive reporting.'
+          },
+          {
+            title: 'Budapest / International Corporate Hub',
+            region: 'Central Europe',
+            tag: 'HU / Intl Registry',
+            imageUrl: 'https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=1200&q=80',
+            description: 'Cross-border company status verification, legal entity identifier (LEI) tracking, and financial statement filing audits.'
+          },
+          {
+            title: 'Sofia / Eastern Europe Innovation Corridor',
+            region: 'Balkan Technology Hub',
+            tag: 'BG / Commercial Register',
+            imageUrl: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=1200&q=80',
+            description: 'Continuous monitoring of regional commercial registries, tax compliance status, and officer disclosure filings.'
+          },
+          {
+            title: 'Belgrade / Balkan Financial Jurisdiction',
+            region: 'Southeastern Europe',
+            tag: 'RS / Business Register',
+            imageUrl: 'https://images.unsplash.com/photo-1596701062351-8c2c14d1fcd0?auto=format&fit=crop&w=1200&q=80',
+            description: 'Real-time APR business register inspection, insolvency record verification, and corporate standing certification.'
+          },
+          {
+            title: 'St. Augustine / Historical Corporate Jurisdiction',
+            region: 'US Atlantic Hub',
+            tag: 'FL / Sunbiz Registry',
+            imageUrl: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=1200&q=80',
+            description: 'Automated Sunbiz state filing checks, annual report deadline monitoring, and Good Standing certificate retrieval.'
+          }
+        ],
         activeStepLogs: [
           { timestamp: '00:01.2', action: 'wait', description: 'Initialized Coasty browser container' },
           { timestamp: '00:02.5', action: 'type_text', description: 'Entered search query into Delaware ICIS portal' },
@@ -643,6 +723,18 @@
             ]
           }
         ],
+        init() {
+          // Auto-slide carousel every 5 seconds
+          setInterval(() => {
+            this.nextSlide();
+          }, 5000);
+        },
+        nextSlide() {
+          this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+        },
+        prevSlide() {
+          this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
+        },
         get filteredResults() {
           return this.results.filter(item => {
             const matchesFilter = this.activeFilter === 'ALL' || item.normalizedStatus === this.activeFilter;
@@ -715,7 +807,7 @@
           this.selectedItem = item;
         },
         downloadReportPdf() {
-          alert('Downloading executive audit report summary PDF...');
+          alert('Downloading global compliance audit report summary PDF...');
         }
       }
     }
