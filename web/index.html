@@ -174,7 +174,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="summary.totalProcessed || completedCount"></span>
+          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="totalAudited"></span>
           <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">100% Verified</span>
         </div>
       </div>
@@ -190,7 +190,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="summary.goodStandingCount"></span>
+          <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="goodStandingCount"></span>
           <span class="text-xs font-mono text-emerald-700 dark:text-emerald-400">Certificates Ready</span>
         </div>
       </div>
@@ -206,8 +206,8 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="summary.delinquentCount + summary.forfeitedCount"></span>
-          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="(summary.totalOwedFormatted || '$950.00') + ' Owed'"></span>
+          <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="delinquentCount"></span>
+          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="totalDelinquencyOwed + ' Owed'"></span>
         </div>
       </div>
 
@@ -222,7 +222,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="summary.totalAutomatedSteps || 65"></span>
+          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="totalAutomatedSteps"></span>
           <span class="text-xs font-mono text-slate-500 dark:text-slate-400">50+ Micro-Steps</span>
         </div>
       </div>
@@ -416,13 +416,26 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200/80 dark:divide-slate-800/60">
-            <template x-for="item in filteredResults" :key="item.id">
+            <!-- Empty Fallback State -->
+            <template x-if="filteredResults.length === 0">
+              <tr>
+                <td colspan="6" class="px-6 py-12 text-center text-slate-400 dark:text-slate-500 font-mono text-xs">
+                  <svg class="w-10 h-10 mx-auto mb-3 text-slate-300 dark:text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  No active audit results. Upload a dataset to begin.
+                </td>
+              </tr>
+            </template>
+
+            <!-- Dynamic Audit Result Rows -->
+            <template x-for="item in filteredResults" :key="item.id || item.taskId || item.businessName || item.business_name">
               <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
                 
                 <!-- Entity Name & Agency -->
                 <td class="px-6 py-4 font-sans">
-                  <div class="font-bold text-slate-900 dark:text-white text-sm" x-text="item.businessName"></div>
-                  <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="item.stateAgency || item.state + ' Secretary of State'"></div>
+                  <div class="font-bold text-slate-900 dark:text-white text-sm" x-text="item.businessName || item.business_name"></div>
+                  <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="item.stateAgency || ((item.state || '') + ' Secretary of State')"></div>
                 </td>
 
                 <!-- State Badge -->
@@ -432,8 +445,8 @@
 
                 <!-- Verifiable Coasty Task Run Link -->
                 <td class="px-6 py-4">
-                  <a :href="item.runUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all font-mono font-bold">
-                    <span x-text="item.taskId"></span>
+                  <a :href="item.runUrl || item.coasty_run_url || '#'" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all font-mono font-bold">
+                    <span x-text="item.taskId || item.id || 'coasty_run'"></span>
                     <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
@@ -442,26 +455,31 @@
 
                 <!-- Normalized Status Pill -->
                 <td class="px-6 py-4">
-                  <template x-if="item.normalizedStatus === 'GOOD_STANDING'">
+                  <template x-if="(item.normalizedStatus || item.status) === 'GOOD_STANDING'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 shadow-sm">
                       <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> GOOD STANDING
                     </span>
                   </template>
-                  <template x-if="item.normalizedStatus === 'DELINQUENT'">
+                  <template x-if="(item.normalizedStatus || item.status) === 'DELINQUENT'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 shadow-sm">
                       <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> DELINQUENT
                     </span>
                   </template>
-                  <template x-if="item.normalizedStatus === 'FORFEITED'">
+                  <template x-if="(item.normalizedStatus || item.status) === 'FORFEITED'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 shadow-sm">
                       <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> FORFEITED
+                    </span>
+                  </template>
+                  <template x-if="(item.normalizedStatus || item.status) !== 'GOOD_STANDING' && (item.normalizedStatus || item.status) !== 'DELINQUENT' && (item.normalizedStatus || item.status) !== 'FORFEITED'">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-700 dark:text-slate-400 border border-slate-500/20 shadow-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> UNKNOWN
                     </span>
                   </template>
                 </td>
 
                 <!-- Fees Owed -->
                 <td class="px-6 py-4 font-bold text-sm">
-                  <span x-text="item.amountOwed || '$0.00'" :class="item.amountOwed ? 'text-rose-600 dark:text-rose-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'"></span>
+                  <span x-text="item.amountOwed || item.delinquency_owed || '$0.00'" :class="(item.amountOwed || item.delinquency_owed) ? 'text-rose-600 dark:text-rose-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'"></span>
                 </td>
 
                 <!-- Action Button Pills -->
@@ -541,10 +559,10 @@
         uploadedFileName: '',
         csvRawContent: null,
         isRunning: false,
-        completedCount: 5,
-        totalCount: 5,
-        progressPercent: 100,
-        statusMessage: 'Execution complete (65 Coasty micro-steps verified)',
+        completedCount: 0,
+        totalCount: 0,
+        progressPercent: 0,
+        statusMessage: 'Ready for entity audit dataset upload',
         activeJobId: null,
         activeSlide: 0,
         slides: [
@@ -589,117 +607,14 @@
         searchQuery: '',
         selectedItem: null,
         summary: {
-          totalProcessed: 5,
-          goodStandingCount: 3,
-          delinquentCount: 1,
-          forfeitedCount: 1,
-          totalOwedFormatted: '$950.00',
-          totalAutomatedSteps: 65
+          totalProcessed: 0,
+          goodStandingCount: 0,
+          delinquentCount: 0,
+          forfeitedCount: 0,
+          totalOwedFormatted: '$0.00',
+          totalAutomatedSteps: 0
         },
-        results: [
-          {
-            id: 'CS-DE-7348912',
-            taskId: 'coasty_run_734891',
-            runUrl: 'https://coasty.ai/v1/runs/coasty_run_734891',
-            businessName: 'Acme Innovation Labs LLC',
-            state: 'DE',
-            stateAgency: 'Delaware Division of Corporations',
-            entityNumber: '7348912',
-            rawStatus: 'Active / In Good Standing',
-            normalizedStatus: 'GOOD_STANDING',
-            amountOwed: null,
-            summaryNote: 'Entity is active and in good standing with the Delaware Division of Corporations.',
-            certPdfPath: '#',
-            filingUrl: null,
-            executionSteps: [
-              { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-              { stepNumber: 2, action: 'type_text', description: 'Enter business name into Delaware portal' },
-              { stepNumber: 3, action: 'click', description: 'Submit entity search form' },
-              { stepNumber: 4, action: 'screenshot', description: 'Capture screenshot of DE entity detail portal view' },
-              { stepNumber: 5, action: 'click', description: 'Generated Delaware Certificate of Good Standing PDF' }
-            ]
-          },
-          {
-            id: 'CS-CA-C4829103',
-            taskId: 'coasty_run_482910',
-            runUrl: 'https://coasty.ai/v1/runs/coasty_run_482910',
-            businessName: 'Apex Quantum Dynamics Inc',
-            state: 'CA',
-            stateAgency: 'California Secretary of State (bizfileOnline)',
-            entityNumber: 'C4829103',
-            rawStatus: 'FTB Suspended / Statement of Info Past Due',
-            normalizedStatus: 'FORFEITED',
-            amountOwed: '$800.00',
-            summaryNote: 'California entity is delinquent with pending FTB tax suspension penalties and statement of info fees.',
-            certPdfPath: null,
-            filingUrl: 'https://bizfileonline.sos.ca.gov/filings/statementofinformation',
-            executionSteps: [
-              { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-              { stepNumber: 2, action: 'type_text', description: 'Enter entity name into CA bizfile search form' },
-              { stepNumber: 3, action: 'extract', description: 'Extract CA entity standing status badge text' },
-              { stepNumber: 4, action: 'click', description: 'Navigate to CA Statement of Information Filing page' },
-              { stepNumber: 5, action: 'extract', description: 'Read CA penalty & annual filing fees: $800.00' }
-            ]
-          },
-          {
-            id: 'CS-NY-5920148',
-            taskId: 'coasty_run_592014',
-            runUrl: 'https://coasty.ai/v1/runs/coasty_run_592014',
-            businessName: 'Empire Logistics Solutions Corp',
-            state: 'NY',
-            stateAgency: 'New York Department of State',
-            entityNumber: '5920148',
-            rawStatus: 'Active / Current',
-            normalizedStatus: 'GOOD_STANDING',
-            amountOwed: null,
-            summaryNote: 'New York corporation is compliant with all biennial statement filings.',
-            certPdfPath: '#',
-            filingUrl: null,
-            executionSteps: [
-              { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-              { stepNumber: 2, action: 'extract', description: 'Parse raw NY entity status text' },
-              { stepNumber: 3, action: 'click', description: 'Generated NY Certificate of Status PDF' }
-            ]
-          },
-          {
-            id: 'CS-TX-0803921841',
-            taskId: 'coasty_run_080392',
-            runUrl: 'https://coasty.ai/v1/runs/coasty_run_080392',
-            businessName: 'Lone Star Energy Systems LLC',
-            state: 'TX',
-            stateAgency: 'Texas Comptroller of Public Accounts',
-            entityNumber: '0803921841',
-            rawStatus: 'Not in Good Standing / Franchise Tax Balance Due',
-            normalizedStatus: 'DELINQUENT',
-            amountOwed: '$150.00',
-            summaryNote: 'Texas LLC has an unpaid franchise tax balance requiring webfile settlement.',
-            certPdfPath: null,
-            filingUrl: 'https://mycpa.cpa.state.tx.us/coa/franchiseTaxFiling',
-            executionSteps: [
-              { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-              { stepNumber: 2, action: 'extract', description: 'Read outstanding TX franchise tax balance: $150.00' }
-            ]
-          },
-          {
-            id: 'CS-FL-P21000049281',
-            taskId: 'coasty_run_210000',
-            runUrl: 'https://coasty.ai/v1/runs/coasty_run_210000',
-            businessName: 'Sunbiz Horizon Technologies Inc',
-            state: 'FL',
-            stateAgency: 'Florida Department of State (Sunbiz)',
-            entityNumber: 'P21000049281',
-            rawStatus: 'Active / Good Standing',
-            normalizedStatus: 'GOOD_STANDING',
-            amountOwed: null,
-            summaryNote: 'Florida entity is active and current on Sunbiz filings.',
-            certPdfPath: '#',
-            filingUrl: null,
-            executionSteps: [
-              { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-              { stepNumber: 2, action: 'click', description: 'Downloaded Florida Certificate of Status PDF' }
-            ]
-          }
-        ],
+        results: [],
         init() {
           setInterval(() => {
             this.nextSlide();
@@ -711,13 +626,41 @@
         prevSlide() {
           this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
         },
+        get totalAudited() {
+          return this.results.length;
+        },
+        get goodStandingCount() {
+          return this.results.filter(item => (item.normalizedStatus || item.status) === 'GOOD_STANDING').length;
+        },
+        get delinquentCount() {
+          return this.results.filter(item => (item.normalizedStatus || item.status) !== 'GOOD_STANDING').length;
+        },
+        get totalDelinquencyOwed() {
+          let total = 0;
+          for (const item of this.results) {
+            const rawOwed = item.amountOwed || item.delinquency_owed;
+            if (rawOwed) {
+              const num = parseFloat(String(rawOwed).replace(/[^0-9.]/g, ''));
+              if (!isNaN(num)) total += num;
+            }
+          }
+          return `$${total.toFixed(2)}`;
+        },
+        get totalAutomatedSteps() {
+          return this.results.reduce((acc, item) => acc + (item.stepCount || (item.executionSteps ? item.executionSteps.length : 0)), 0);
+        },
         get filteredResults() {
           return this.results.filter(item => {
-            const matchesFilter = this.activeFilter === 'ALL' || item.normalizedStatus === this.activeFilter;
+            const status = item.normalizedStatus || item.status || 'UNKNOWN';
+            const name = item.businessName || item.business_name || '';
+            const state = item.state || '';
+            const entityNo = item.entityNumber || item.entity_number || '';
+
+            const matchesFilter = this.activeFilter === 'ALL' || status === this.activeFilter;
             const matchesSearch = !this.searchQuery || 
-              item.businessName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-              item.state.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-              item.entityNumber.includes(this.searchQuery);
+              name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              state.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              entityNo.toLowerCase().includes(this.searchQuery.toLowerCase());
             return matchesFilter && matchesSearch;
           });
         },
@@ -766,6 +709,11 @@
           this.isRunning = true;
           this.progressPercent = 15;
           this.statusMessage = 'Executing Secretary of State entity verification audit (200 OK)...';
+
+          // Clear previous results & reset counts on new upload start
+          this.results = [];
+          this.completedCount = 0;
+          this.totalCount = 0;
 
           try {
             const res = await fetch('/api/audit', {
