@@ -260,8 +260,8 @@ if (isDirectExecution) {
   app.listen(PORT, () => {
     console.log(`
 \x1b[32m  🛡️ COMPLIANCESCOUT Server Running on http://localhost:${PORT}\x1b[0m
-\x1b[90m  API Endpoints: POST /api/audit (HTTP 202) | GET /api/status/:job_id\x1b[0m
-\x1b[90m  Mode: Asynchronous Non-Blocking Job Queue (Vercel Timeout Safe)\x1b[0m
+\x1b[90m  API Endpoints: POST /api/audit (HTTP 200 OK) | GET /api/status/:job_id\x1b[0m
+\x1b[90m  Mode: Synchronous Inline Execution & Real Coasty Portal Extraction\x1b[0m
 `);
   });
 }
