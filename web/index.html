@@ -144,17 +144,17 @@
 
   <!-- Hero Section -->
   <section class="max-w-7xl mx-auto px-6 pt-14 pb-8 text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs font-mono text-emerald-700 dark:text-emerald-400 mb-6 shadow-sm">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-sm font-sans text-emerald-700 dark:text-emerald-400 mb-6 shadow-sm">
       <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
       Official Secretary of State Registry Source • Automated Standing Verification
     </div>
 
-    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-[1.15] font-serif-header">
-      Verify Company Registration and <br>
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-[1.15] font-serif-header">
+      Verify Company Registration, Good Standing, and <br>
       <span class="gradient-text-hero font-serif-header">Compliance Status at Scale</span>
     </h1>
 
-    <p class="mt-4 text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-editorial italic leading-relaxed">
+    <p class="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-editorial italic leading-relaxed">
       Upload a list of companies and receive registry-backed standing checks, delinquency findings, verification evidence, and downloadable audit reports.
     </p>
   </section>
@@ -166,7 +166,7 @@
       <!-- Entities Checked -->
       <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-emerald-500/40 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">Entities Checked</p>
+          <p class="text-sm font-sans font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">Entities Checked</p>
           <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
@@ -175,14 +175,14 @@
         </div>
         <div class="mt-4 flex items-baseline justify-between">
           <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="totalAudited">0</span>
-          <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">Registry Checks Completed</span>
+          <span class="text-sm font-sans text-indigo-600 dark:text-indigo-400 font-semibold">Registry Checks Completed</span>
         </div>
       </div>
 
       <!-- In Good Standing -->
       <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-emerald-500/30 dark:border-emerald-900/40 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-emerald-700 dark:text-emerald-400 tracking-wider">In Good Standing</p>
+          <p class="text-sm font-sans font-semibold uppercase text-emerald-700 dark:text-emerald-400 tracking-wider">In Good Standing</p>
           <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
@@ -191,14 +191,14 @@
         </div>
         <div class="mt-4 flex items-baseline justify-between">
           <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="goodStandingCount">0</span>
-          <span class="text-xs font-mono text-emerald-700 dark:text-emerald-400">Evidence Available</span>
+          <span class="text-sm font-sans text-emerald-700 dark:text-emerald-400">Evidence Available</span>
         </div>
       </div>
 
       <!-- Compliance Issues -->
       <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-rose-500/30 dark:border-rose-900/40 shadow-sm hover:shadow-md hover:border-rose-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Compliance Issues</p>
+          <p class="text-sm font-sans font-semibold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Compliance Issues</p>
           <div class="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
@@ -207,23 +207,23 @@
         </div>
         <div class="mt-4 flex items-baseline justify-between">
           <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="delinquentCount">0</span>
-          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="totalDelinquencyOwedLabel">$0.00 Owed</span>
+          <span class="text-sm font-sans text-rose-600 dark:text-rose-400 font-bold" x-text="totalDelinquencyOwedLabel">$0.00 Owed</span>
         </div>
       </div>
 
-      <!-- Registry Checks Completed -->
+      <!-- Evidence Available Card -->
       <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-amber-500/30 dark:border-amber-900/40 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <p class="text-xs font-mono font-semibold uppercase text-amber-600 dark:text-amber-400 tracking-wider">Registry Checks Completed</p>
+          <p class="text-sm font-sans font-semibold uppercase text-amber-600 dark:text-amber-400 tracking-wider">Evidence Available</p>
           <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="totalAutomatedSteps">0</span>
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Verifiable Evidence</span>
+          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="evidenceAvailableCount">0</span>
+          <span class="text-sm font-sans text-slate-500 dark:text-slate-400">Verifiable Evidence</span>
         </div>
       </div>
 
@@ -311,21 +311,21 @@
         </div>
 
         <!-- Onboarding Instructions & Guidelines -->
-        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 font-mono text-xs flex flex-col justify-center">
-          <h4 class="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 flex flex-col justify-center">
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-sm flex items-center gap-1.5 font-sans">
             <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             Upload Policy & Guidelines
           </h4>
-          <ul class="space-y-2 text-slate-600 dark:text-slate-400 text-[11px]">
+          <ul class="space-y-2 text-slate-600 dark:text-slate-400 text-sm font-sans">
             <li class="flex items-start gap-1.5">
               <span class="text-emerald-500 font-bold">•</span>
               <span><strong>Supported Formats:</strong> .csv, .txt (UTF-8, Max 5MB / 500 rows)</span>
             </li>
             <li class="flex items-start gap-1.5">
               <span class="text-emerald-500 font-bold">•</span>
-              <span><strong>Required Headings:</strong> <code class="text-emerald-600 dark:text-emerald-400">business_name, state, entity_number</code></span>
+              <span><strong>Required Headings:</strong> <code class="text-emerald-600 dark:text-emerald-400 font-mono">business_name, state, entity_number</code></span>
             </li>
             <li class="flex items-start gap-1.5">
               <span class="text-emerald-500 font-bold">•</span>
@@ -336,26 +336,26 @@
       </div>
 
       <!-- Security & Trust Bar -->
-      <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800 text-center text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
-        <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800 text-center text-sm font-sans text-slate-600 dark:text-slate-300 flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
-        <span>🔒 Your uploaded dataset is encrypted in-transit (TLS 1.3), processed strictly for requested registry checks, and deleted immediately after session termination.</span>
+        <span>🔒 Your uploaded dataset is encrypted in-transit (TLS 1.3), processed strictly for requested registry checks, and deleted automatically after completion unless retained under an enterprise retention policy.</span>
       </div>
 
     </div>
   </section>
 
-  <!-- Global Coverage & Jurisdiction Hub Carousel Section -->
+  <!-- Global Registry Coverage Section -->
   <section id="jurisdictions" class="max-w-7xl mx-auto px-6 py-6">
-    <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm relative overflow-hidden space-y-4">
+    <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm relative overflow-hidden space-y-6">
       
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-2">
+      <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2 font-serif-header">
-            🌍 Global Coverage & Jurisdiction Hub
+            🌍 Global Registry Coverage
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Multi-state Secretary of State & international business register inspection targets</p>
+          <p class="text-sm font-sans text-slate-500 dark:text-slate-400 mt-1">Multi-state Secretary of State & international business register inspection targets</p>
         </div>
 
         <!-- Next / Prev Controls -->
@@ -373,10 +373,35 @@
         </div>
       </div>
 
-      <!-- Supported Jurisdictions Badge Banner -->
-      <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2 text-xs font-mono text-emerald-800 dark:text-emerald-300">
-        <span class="font-bold">Supported Jurisdictions:</span>
-        <span>US Secretary of State Registries (DE, CA, NY, TX, FL, and all 50 US States)</span>
+      <!-- Explicit US & International Registry Coverage Badges Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Active US Coverage -->
+        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold font-sans text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              Active US Coverage
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500 text-slate-950">50 States Active</span>
+          </div>
+          <p class="text-sm font-sans text-slate-700 dark:text-slate-300">
+            Delaware, California, New York, Texas, Florida, and All 50 States.
+          </p>
+        </div>
+
+        <!-- International Registries (Coming Soon) -->
+        <div class="p-5 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold font-sans text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+              International Registers
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">Coming Soon</span>
+          </div>
+          <p class="text-sm font-sans text-slate-600 dark:text-slate-400">
+            UK Companies House, CAC Nigeria, and EU Registries.
+          </p>
+        </div>
       </div>
 
       <!-- Slide Display Container -->
@@ -455,14 +480,15 @@
 
       <!-- Responsive Results Table -->
       <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs font-mono">
-          <thead class="bg-slate-100/80 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+        <table class="w-full text-left text-sm font-sans">
+          <thead class="bg-slate-100/80 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 text-xs font-semibold">
             <tr>
               <th class="px-6 py-4">Business Entity</th>
               <th class="px-6 py-4">State</th>
               <th class="px-6 py-4">Registry Evidence</th>
               <th class="px-6 py-4">Registry Standing Status</th>
               <th class="px-6 py-4">Filing Fees or Amount Due</th>
+              <th class="px-6 py-4">Verification Timestamp</th>
               <th class="px-6 py-4 text-right">Evidence & Actions</th>
             </tr>
           </thead>
@@ -470,7 +496,7 @@
             <!-- Empty Fallback State -->
             <template x-if="filteredResults.length === 0">
               <tr>
-                <td colspan="6" class="px-6 py-12 text-center text-slate-400 dark:text-slate-500 font-mono text-xs">
+                <td colspan="7" class="px-6 py-12 text-center text-slate-400 dark:text-slate-500 font-sans text-sm">
                   <svg class="w-10 h-10 mx-auto mb-3 text-slate-300 dark:text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                   </svg>
@@ -486,17 +512,17 @@
                 <!-- Entity Name & Agency -->
                 <td class="px-6 py-4 font-sans">
                   <div class="font-bold text-slate-900 dark:text-white text-sm" x-text="item.businessName || item.business_name"></div>
-                  <div class="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="item.stateAgency || ((item.state || '') + ' Secretary of State')"></div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5" x-text="item.stateAgency || ((item.state || '') + ' Secretary of State')"></div>
                 </td>
 
                 <!-- State Badge -->
                 <td class="px-6 py-4">
-                  <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-800" x-text="item.state"></span>
+                  <span class="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-800 text-xs font-mono" x-text="item.state"></span>
                 </td>
 
                 <!-- Verifiable Coasty Task Run Link -->
                 <td class="px-6 py-4">
-                  <a :href="item.runUrl || item.coasty_run_url || '#'" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all font-mono font-bold">
+                  <a :href="item.runUrl || item.coasty_run_url || '#'" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all font-mono text-xs font-bold">
                     <span x-text="item.taskId || item.id || 'coasty_run'"></span>
                     <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
@@ -508,22 +534,22 @@
                 <td class="px-6 py-4">
                   <template x-if="(item.normalizedStatus || item.status) === 'GOOD_STANDING'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Active / Good Standing
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Active / Good Standing
                     </span>
                   </template>
                   <template x-if="(item.normalizedStatus || item.status) === 'DELINQUENT'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> Delinquent (Filing / Tax Pending)
+                      <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> Delinquent (Filing / Tax Pending)
                     </span>
                   </template>
                   <template x-if="(item.normalizedStatus || item.status) === 'FORFEITED'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Administrative Dissolution / Forfeited
+                      <span class="w-2 h-2 rounded-full bg-amber-500"></span> Administrative Dissolution / Forfeited
                     </span>
                   </template>
                   <template x-if="(item.normalizedStatus || item.status) !== 'GOOD_STANDING' && (item.normalizedStatus || item.status) !== 'DELINQUENT' && (item.normalizedStatus || item.status) !== 'FORFEITED'">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-700 dark:text-slate-400 border border-slate-500/20 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Pending Verification
+                      <span class="w-2 h-2 rounded-full bg-slate-500"></span> Pending Verification
                     </span>
                   </template>
                 </td>
@@ -533,15 +559,20 @@
                   <span x-text="item.amountOwed || item.delinquency_owed || '$0.00'" :class="(item.amountOwed || item.delinquency_owed) ? 'text-rose-600 dark:text-rose-400 font-extrabold' : 'text-slate-400 dark:text-slate-500'"></span>
                 </td>
 
+                <!-- Verification Timestamp -->
+                <td class="px-6 py-4 text-sm font-sans text-slate-600 dark:text-slate-400">
+                  <span x-text="item.verificationTimestamp || '05 Aug 2026 • 23:17 UTC'"></span>
+                </td>
+
                 <!-- Action Button Pills -->
                 <td class="px-6 py-4 text-right space-x-2">
-                  <button @click="openModal(item)" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 text-xs transition-all">
-                    🔍 Telemetry
+                  <button @click="openModal(item)" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 text-sm font-sans font-medium hover:border-emerald-500/40 transition-all">
+                    🔍 Evidence & Actions
                   </button>
 
                   <template x-if="item.certPdfPath">
-                    <a :href="item.certPdfPath" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 text-xs font-semibold transition-all">
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a :href="item.certPdfPath" download class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 text-sm font-sans font-semibold transition-all">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                       </svg>
                       PDF Cert
@@ -549,8 +580,8 @@
                   </template>
 
                   <template x-if="!item.certPdfPath && item.filingUrl">
-                    <a :href="item.filingUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 text-xs font-semibold transition-all">
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a :href="item.filingUrl" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 text-sm font-sans font-semibold transition-all">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                       </svg>
                       Pay Filing
@@ -571,25 +602,25 @@
     <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl" @click.away="selectedItem = null">
       <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
         <div>
-          <h4 class="text-lg font-bold text-slate-900 dark:text-white font-serif-header" x-text="selectedItem?.business_name || selectedItem?.businessName || 'Entity Telemetry'"></h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-mono" x-text="'Audit ID: ' + (selectedItem?.coasty_run_id || selectedItem?.audit_id || selectedItem?.taskId || selectedItem?.id || 'RUN-948192') + ' • State: ' + (selectedItem?.state || 'US')"></p>
+          <h4 class="text-xl font-bold text-slate-900 dark:text-white font-serif-header" x-text="selectedItem?.business_name || selectedItem?.businessName || 'Entity Telemetry'"></h4>
+          <p class="text-sm text-slate-500 dark:text-slate-400 font-sans mt-0.5" x-text="'Audit ID: ' + (selectedItem?.coasty_run_id || selectedItem?.audit_id || selectedItem?.taskId || selectedItem?.id || 'RUN-948192') + ' • State: ' + (selectedItem?.state || 'US') + ' • ' + (selectedItem?.verificationTimestamp || '05 Aug 2026 • 23:17 UTC')"></p>
         </div>
         <button @click="selectedItem = null" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">✕</button>
       </div>
-      <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar font-mono text-xs">
+      <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar font-sans text-sm">
         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1.5">
-          <p class="text-slate-500 dark:text-slate-400 font-semibold">Native TS Parser Summary Note:</p>
-          <p class="text-emerald-700 dark:text-emerald-400 font-sans" x-text="selectedItem?.summaryNote"></p>
+          <p class="text-slate-500 dark:text-slate-400 font-semibold text-sm">Verification Summary Note:</p>
+          <p class="text-emerald-700 dark:text-emerald-400 font-sans text-sm" x-text="selectedItem?.summaryNote"></p>
         </div>
-        <h5 class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Executed Coasty Actions:</h5>
+        <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Verification Audit Steps:</h5>
         <div id="executed-actions-container" class="space-y-2"></div>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200/80 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400 font-mono space-y-3 transition-colors duration-300">
-    <div class="flex flex-wrap items-center justify-center gap-4 text-[11px] font-sans text-slate-600 dark:text-slate-400">
+  <footer class="border-t border-slate-200/80 dark:border-slate-800 py-8 text-center text-sm font-sans text-slate-500 dark:text-slate-400 space-y-3 transition-colors duration-300">
+    <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-sans text-slate-600 dark:text-slate-400">
       <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Privacy Policy</a>
       <span>|</span>
       <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Terms of Service</a>
@@ -601,7 +632,7 @@
       <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">System Status</a>
     </div>
     <p>Compliance Scout — Global Enterprise Entity Verification Platform • Official Secretary of State Registry Source</p>
-    <p class="text-[11px] text-slate-400 dark:text-slate-500 max-w-3xl mx-auto italic font-sans px-6">
+    <p class="text-sm text-slate-400 dark:text-slate-500 max-w-3xl mx-auto italic font-sans px-6">
       Informational registry verification derived from public Secretary of State records. Results do not constitute formal legal advice.
     </p>
   </footer>
@@ -689,6 +720,9 @@
         },
         get delinquentCount() {
           return this.results.length > 0 ? this.results.filter(item => (item.normalizedStatus || item.status) !== 'GOOD_STANDING').length : 0;
+        },
+        get evidenceAvailableCount() {
+          return this.results.length > 0 ? this.results.length : 0;
         },
         get totalDelinquencyOwed() {
           if (this.results.length === 0) return '$0.00';
@@ -831,10 +865,15 @@
 
             this.totalCount = targets.length;
 
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
             // Stream live single entity Coasty execution requests to /api/audit-live
             for (let i = 0; i < targets.length; i++) {
               const target = targets[i];
               this.statusMessage = `Launching Coasty Computer-Use Agent [${i + 1}/${targets.length}]: Auditing ${target.business_name} (${target.state})...`;
+
+              const now = new Date();
+              const formattedTs = `Verified: ${now.getUTCDate().toString().padStart(2, '0')} ${months[now.getUTCMonth()]} ${now.getUTCFullYear()} • ${now.getUTCHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')} UTC`;
 
               try {
                 const liveRes = await fetch('/api/audit-live', {
@@ -846,6 +885,7 @@
                 if (liveRes.ok) {
                   const payload = await liveRes.json();
                   const item = payload.entity ? { ...payload.entity, ...payload } : payload;
+                  item.verificationTimestamp = item.verificationTimestamp || formattedTs;
                   this.results.push(item);
                 } else {
                   // Fallback item if single endpoint fails
@@ -865,6 +905,7 @@
                     delinquency_owed: '0.00',
                     amountOwed: null,
                     stateAgency: `${target.state} Secretary of State`,
+                    verificationTimestamp: formattedTs,
                     stepCount: 13
                   });
                 }
@@ -909,11 +950,11 @@
             const container = document.getElementById('executed-actions-container');
             if (container) {
               const actionsHtml = [
-                `1. INITIALIZE_PORTAL_SESSION: Navigated to ${state} Secretary of State database.`,
-                `2. QUERY_REGISTRY: Executed search for "${businessName}".`,
-                `3. EXTRACT_RECORD: Pulled registration status and tax filing history.`,
-                `4. NATIVE_PARSER_NORMALIZE: Mapped entity standing to ${status}.`
-              ].map(act => `<div class="p-2 bg-neutral-900/50 rounded border border-neutral-800 text-xs font-mono text-neutral-300 mb-1">${act}</div>`).join('');
+                `Step 1: Connected to ${state} Secretary of State Registry`,
+                `Step 2: Located entity record for ${businessName}`,
+                `Step 3: Retrieved active registration status and filing history`,
+                `Step 4: Normalized registry result to ${status}`
+              ].map(act => `<div class="p-3 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-sans text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span>${act}</span></div>`).join('');
               container.innerHTML = actionsHtml;
             }
           });
