@@ -199,6 +199,7 @@ app.post('/api/audit', async (req: Request, res: Response) => {
 
     // 3. Return HTTP 200 OK directly with completed audit results payload
     return res.status(200).json({
+      success: true,
       job_id: finalJob.jobId,
       status: finalJob.status,
       total_count: finalJob.totalCount,
