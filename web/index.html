@@ -174,7 +174,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="totalAudited"></span>
+          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="totalAudited">-</span>
           <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">100% Verified</span>
         </div>
       </div>
@@ -190,7 +190,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="goodStandingCount"></span>
+          <span class="text-4xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400" x-text="goodStandingCount">-</span>
           <span class="text-xs font-mono text-emerald-700 dark:text-emerald-400">Certificates Ready</span>
         </div>
       </div>
@@ -206,8 +206,8 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="delinquentCount"></span>
-          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="totalDelinquencyOwed + ' Owed'"></span>
+          <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="delinquentCount">-</span>
+          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="totalDelinquencyOwedLabel">-</span>
         </div>
       </div>
 
@@ -222,7 +222,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="totalAutomatedSteps"></span>
+          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="totalAutomatedSteps">-</span>
           <span class="text-xs font-mono text-slate-500 dark:text-slate-400">50+ Micro-Steps</span>
         </div>
       </div>
@@ -627,15 +627,16 @@
           this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
         },
         get totalAudited() {
-          return this.results.length;
+          return this.results.length > 0 ? this.results.length : '-';
         },
         get goodStandingCount() {
-          return this.results.filter(item => (item.normalizedStatus || item.status) === 'GOOD_STANDING').length;
+          return this.results.length > 0 ? this.results.filter(item => (item.normalizedStatus || item.status) === 'GOOD_STANDING').length : '-';
         },
         get delinquentCount() {
-          return this.results.filter(item => (item.normalizedStatus || item.status) !== 'GOOD_STANDING').length;
+          return this.results.length > 0 ? this.results.filter(item => (item.normalizedStatus || item.status) !== 'GOOD_STANDING').length : '-';
         },
         get totalDelinquencyOwed() {
+          if (this.results.length === 0) return '-';
           let total = 0;
           for (const item of this.results) {
             const rawOwed = item.amountOwed || item.delinquency_owed;
@@ -646,8 +647,14 @@
           }
           return `$${total.toFixed(2)}`;
         },
+        get totalDelinquencyOwedLabel() {
+          if (this.results.length === 0) return '-';
+          return `${this.totalDelinquencyOwed} Owed`;
+        },
         get totalAutomatedSteps() {
-          return this.results.reduce((acc, item) => acc + (item.stepCount || (item.executionSteps ? item.executionSteps.length : 0)), 0);
+          if (this.results.length === 0) return '-';
+          const steps = this.results.reduce((acc, item) => acc + (item.stepCount || (item.executionSteps ? item.executionSteps.length : 0)), 0);
+          return steps > 0 ? steps : '-';
         },
         get filteredResults() {
           return this.results.filter(item => {
