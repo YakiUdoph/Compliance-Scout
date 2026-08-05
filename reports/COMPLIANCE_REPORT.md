@@ -5,13 +5,13 @@
 
 | Metric | Aggregate Value |
 | :--- | :--- |
-| **Total Entities Scanned** | `5` |
-| **Entities in Good Standing** | 🟢 `3` |
-| **Delinquent / Action Required** | 🔴 `1` |
-| **Administrative Forfeitures** | ⛔ `1` |
-| **Total Outstanding Delinquency Fees** | **$950.00** |
-| **Total Computer-Use Micro-Steps Executed** | ⚡ `65` steps |
-| **Batch Runtime Duration** | ⏱️ `1.46s` |
+| **Total Entities Scanned** | `1` |
+| **Entities in Good Standing** | 🟢 `1` |
+| **Delinquent / Action Required** | 🔴 `0` |
+| **Administrative Forfeitures** | ⛔ `0` |
+| **Total Outstanding Delinquency Fees** | **$0.00** |
+| **Total Computer-Use Micro-Steps Executed** | ⚡ `13` steps |
+| **Batch Runtime Duration** | ⏱️ `0.82s` |
 
 ---
 
@@ -19,11 +19,7 @@
 
 | Business Entity Name | State | Entity # | Coasty Verifiable Run URL | Raw State Status | Normalized Status | Fees Owed | Certificate PDF |
 | :--- | :---: | :---: | :---: | :--- | :---: | :---: | :---: |
-| **Acme Innovation Labs LLC** | `DE` | `7348912` | [`coasty_run_887343`](https://coasty.ai/v1/runs/coasty_run_887343) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\DE_acme_innovation_labs_llc_cert.pdf) |
-| **Apex Quantum Dynamics Inc** | `CA` | `C4829103` | [`coasty_run_260809`](https://coasty.ai/v1/runs/coasty_run_260809) | FTB Suspended / Statement of Info Past Due | ⛔ FORFEITED | **$800.00** | N/A (Delinquent) |
-| **Empire Logistics Solutions Corp** | `NY` | `5920148` | [`coasty_run_521873`](https://coasty.ai/v1/runs/coasty_run_521873) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\NY_empire_logistics_solutions_corp_cert.pdf) |
-| **Lone Star Energy Systems LLC** | `TX` | `0803921841` | [`coasty_run_608231`](https://coasty.ai/v1/runs/coasty_run_608231) | Not in Good Standing / Franchise Tax Balance Due | 🔴 DELINQUENT | **$150.00** | N/A (Delinquent) |
-| **Sunbiz Horizon Technologies Inc** | `FL` | `P21000049281` | [`coasty_run_539235`](https://coasty.ai/v1/runs/coasty_run_539235) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\FL_sunbiz_horizon_technologies_inc_cert.pdf) |
+| **Epsilon Corp** | `FL` | `555444` | [`coasty_run_726955`](https://coasty.ai/v1/runs/coasty_run_726955) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\FL_epsilon_corp_cert.pdf) |
 
 ---
 
