@@ -187,25 +187,31 @@ app.post('/api/audit', async (req: Request, res: Response) => {
 
     const finalJob = getJob(job.jobId) || job;
 
-    const entities = (finalJob.results || []).map(r => ({
-      business_name: r.businessName,
-      state: r.state,
-      entity_number: r.entityNumber,
-      coasty_run_id: r.taskId,
-      coasty_run_url: r.runUrl,
-      status: r.normalizedStatus,
-      delinquency_owed: r.amountOwed || '$0.00',
+    const entities = (finalJob.results || []).map(r => {
+      const rawOwed = r.amountOwed ? r.amountOwed.replace(/[^0-9.]/g, '') : '0.00';
+      const delinquencyOwed = rawOwed && rawOwed !== '0.00' ? (rawOwed.includes('.') ? rawOwed : rawOwed + '.00') : '0.00';
+      const coastyRunUrl = r.runUrl && r.runUrl.includes('coasty.ai') ? r.runUrl : `https://coasty.ai/runs/${r.taskId}`;
 
-      // Compatibility aliases
-      businessName: r.businessName,
-      taskId: r.taskId,
-      runUrl: r.runUrl,
-      normalizedStatus: r.normalizedStatus,
-      amountOwed: r.amountOwed || '$0.00',
-      summaryNote: r.summaryNote,
-      executionSteps: r.executionSteps,
-      stepCount: r.stepCount
-    }));
+      return {
+        business_name: r.businessName,
+        state: r.state,
+        entity_number: r.entityNumber,
+        coasty_run_id: r.taskId,
+        coasty_run_url: coastyRunUrl,
+        status: r.normalizedStatus,
+        delinquency_owed: delinquencyOwed,
+
+        // Compatibility aliases
+        businessName: r.businessName,
+        taskId: r.taskId,
+        runUrl: coastyRunUrl,
+        normalizedStatus: r.normalizedStatus,
+        amountOwed: r.amountOwed || '$0.00',
+        summaryNote: r.summaryNote,
+        executionSteps: r.executionSteps,
+        stepCount: r.stepCount
+      };
+    });
 
     if (finalJob.status === 'FAILED') {
       return res.status(500).json({
