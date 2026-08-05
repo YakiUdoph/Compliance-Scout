@@ -1,97 +1,49 @@
-<div align="center">
+# ComplianceScout 🚀
 
-# 🛡️ COMPLIANCESCOUT
+An open-source, agentic CLI and backend engine that automates legal compliance checks across multi-state Secretary of State (SOS) registries. Built natively inside Google Antigravity for the Coasty Hackathon.
 
-**Global Enterprise Entity Verification & Automated Compliance Inspection Platform**
+🌐 **Live Demo:** [c-scout-phi.vercel.app](https://c-scout-phi.vercel.app)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20.0.0-339933.svg)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6.svg)](https://www.typescriptlang.org/)
-[![Coasty REST API](https://img.shields.io/badge/Coasty%20API-coasty.ai-10B981.svg)](https://coasty.ai)
-[![Architecture](https://img.shields.io/badge/Pattern-Async%20Job%20Queue-6366F1.svg)](#asynchronous-job-queue--polling-pattern)
-[![Vercel Safe](https://img.shields.io/badge/Vercel-HTTP%20202%20Safe-000000.svg)](#vercel-deployment-verceljson)
+## 💡 The Problem & The Core Innovation
+Most public business registries lack clean, programmatic APIs. Existing enterprise solutions charge heavy premiums for basic KYB (Know Your Business) verification. 
 
-[Live Dashboard](web/index.html) • [Quickstart Guide](#quickstart) • [Integration Test](#verification-test-suite)
+**ComplianceScout** bypasses API limitations by deploying **Coasty computer-use browser agents** (`coasty.ai`) to dynamically navigate, screenshot, and extract real-time compliance records directly from raw state portals. 
 
----
+### ⚡ Production-Grade Architecture (Bypassing Serverless Timeouts & External LLMs)
+Standard Vercel serverless deployments impose a strict **10-second hobby timeout limit**. Because driving complex browser automation workflows across multiple states can take anywhere from 30 to 90 seconds, a standard synchronous request model would fail.
 
-</div>
-
-## 📌 Executive Summary & Architecture
-
-Corporate entity compliance across Secretary of State databases & global commercial registries suffers from lack of standardized APIs. **ComplianceScout** delivers autonomous, enterprise-grade inspection without hitting HTTP timeouts:
-
-1. **Asynchronous Job Queue & Polling Pattern**: `POST /api/audit` acts as a thin producer controller, returning an instant **`HTTP 202 Accepted`** with a `job_id` (< 200ms). Background Coasty browser tasks execute asynchronously while the client polls `GET /api/status/:job_id` every 3 seconds to stream live status updates. This completely eliminates Vercel `504 Gateway Timeouts`.
-2. **Official Coasty REST API (`coasty.ai`)**: Dispatches computer-use tasks to `POST https://coasty.ai/v1/runs` and polls `GET https://coasty.ai/v1/runs/{id}`. Every audit result attaches a verifiable **Coasty Task Run URL** (`https://coasty.ai/v1/runs/{runId}`).
-3. **Zero-Dependency Native Status Parser (`src/normalizer/parser.ts`)**: Local TypeScript parser extracting structured JSON blocks and regex legal keyword tags (`GOOD_STANDING`, `DELINQUENT`, `FORFEITED`, `UNKNOWN`). Zero external LLM dependencies.
+ComplianceScout solves this by utilizing an **Asynchronous Polling Architecture** with zero external LLM latency:
+1. **Ingest:** The client uploads a `businesses.csv` file to the Vercel edge.
+2. **Handshake:** The backend instantiates an isolated `JobStore` record, assigns a unique `job_id`, fires off the worker thread, and returns a `202 Accepted` response to the client **instantly** (< 200ms).
+3. **Execution:** The decoupled background worker kicks off parallel Coasty browser agents via the official Coasty REST API (`POST /v1/runs`).
+4. **Data Normalization:** Raw portal statuses (e.g., *"Forfeited"*, *"In Good Standing"*, *"Delinquent"*) are extracted directly from agent JSON outputs and mapped locally using a zero-dependency TypeScript parser (`src/normalizer/parser.ts`).
+5. **Poll:** The frontend client seamlessly queries the status endpoint using the `job_id` until state mutation switches to `completed`.
 
 ---
 
-## 🏛️ Asynchronous Job Queue Sequence Diagram
-
-```
-  Client Web UI (web/index.html)
-        │
-        ├── 1. POST /api/audit (Returns HTTP 202 Accepted + job_id in < 200ms) ──┐
-        │                                                                        │
-        ├── 2. Polls GET /api/status/:job_id every 3 seconds ────────────────┐   │
-        │                                                                    │   │
-        ▼                                                                    ▼   ▼
-  Express / Vercel Controller (src/server.ts) ──────────────────────► In-Memory Job Store
-        │ (Non-blocking background thread)                           (src/engine/job-store.ts)
-        │                                                                    ▲
-        ▼                                                                    │
-  Async Batch Orchestrator (src/engine/runner.ts)                           │
-        │                                                                    │
-        ├── Executes Coasty Browser Tasks (POST /v1/runs) ──────────────────┤
-        └── Incrementally updates job status & entity results ───────────────┘
-```
+## 🛠️ Tech Stack
+- **Workspace Environments:** Google Antigravity 2.0 (Agentic Scaffolding & Browser-in-the-Loop validation)
+- **Deployment & Hosting:** Vercel (Dynamic Node.js Runtime)
+- **Browser Automation:** Official Coasty REST API (`/v1/runs`)
+- **Data Normalization:** Native TypeScript JSON & Regex Parser (`src/normalizer/parser.ts`)
+- **Language Stack:** TypeScript, Node.js (ES2022)
 
 ---
 
-## ⚡ Verifiable Audit Telemetry & Task Run URLs
-
-Every entity audited by ComplianceScout receives a unique Coasty Task Run ID and verifiable URL logged directly into audit reports:
-
-| Entity Name | State | Coasty Task Run URL | Status Tag | Fees Owed | Artifact Download |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Acme Innovation Labs LLC** | `DE` | [`coasty_run_734891`](https://coasty.ai/v1/runs/coasty_run_734891) | 🟢 GOOD STANDING | $0.00 | [📄 Cert PDF](#) |
-| **Apex Quantum Dynamics Inc** | `CA` | [`coasty_run_482910`](https://coasty.ai/v1/runs/coasty_run_482910) | ⛔ FORFEITED | $800.00 | N/A (Filing Link) |
-| **Empire Logistics Solutions Corp** | `NY` | [`coasty_run_592014`](https://coasty.ai/v1/runs/coasty_run_592014) | 🟢 GOOD STANDING | $0.00 | [📄 Cert PDF](#) |
-
----
-
-## 🚀 Quickstart
-
-### 1. Installation & Environment Setup
-
-```bash
-git clone https://github.com/YakiUdoph/Compliance-Scout.git
-cd Compliance-Scout
-npm install
-cp .env.example .env
-```
-
-### 2. Build & Launch Backend Server
-
-```bash
-# Build TypeScript project
-npm run build
-
-# Start Express Backend Server on http://localhost:3000
-npm run server
-```
-
-### 3. Verification Test Suite
-
-Run the automated integration test against Coasty REST API endpoints:
-
-```bash
-npm run test:coasty
-```
-
-### 4. Vercel Deployment (`vercel.json`)
-
-```bash
-npx vercel
+## 📂 Directory Layout
+```directory
+compliancescout/
+├── src/
+│   ├── index.ts              # Export root & type definitions
+│   ├── server.ts             # Vercel entry point & CSV status routes
+│   ├── engine/
+│   │   ├── coasty-client.ts  # Coasty REST API client (/v1/runs)
+│   │   ├── runner.ts         # Concurrency batch orchestrator & job status updater
+│   │   └── job-store.ts      # Non-blocking async job state registry
+│   ├── normalizer/
+│   │   └── parser.ts         # Local TypeScript status & fee parser
+│   └── types/
+│       └── compliance.ts     # Normalized schema definitions
+├── vercel.json               # Serverless dynamic routing overrides
+└── package.json              # Main project compilation manifests
 ```
