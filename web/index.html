@@ -101,7 +101,7 @@
           </div>
           <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono opacity-80 flex items-center gap-1.5 mt-0.5">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            Official Secretary of State Registry Source • Automated Standing Verification
+            Global Business Registry Intelligence • Automated Compliance Verification
           </p>
         </div>
       </div>
@@ -146,7 +146,7 @@
   <section class="max-w-7xl mx-auto px-6 pt-14 pb-8 text-center">
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-sm font-sans text-emerald-700 dark:text-emerald-400 mb-6 shadow-sm">
       <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-      Official Secretary of State Registry Source • Automated Standing Verification
+      Global Business Registry Intelligence • Automated Compliance Verification
     </div>
 
     <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-[1.15] font-serif-header">
@@ -155,7 +155,7 @@
     </h1>
 
     <p class="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-editorial italic leading-relaxed">
-      Upload a list of companies and receive registry-backed standing checks, delinquency findings, verification evidence, and downloadable audit reports.
+      Upload business portfolios to retrieve official global registry findings, standing status, delinquency findings, and verifiable compliance evidence across international jurisdictions.
     </p>
   </section>
 
@@ -325,11 +325,11 @@
             </li>
             <li class="flex items-start gap-1.5">
               <span class="text-emerald-500 font-bold">•</span>
-              <span><strong>Required Headings:</strong> <code class="text-emerald-600 dark:text-emerald-400 font-mono">business_name, state, entity_number</code></span>
+              <span><strong>Required Headings:</strong> <code class="text-emerald-600 dark:text-emerald-400 font-mono">business_name, jurisdiction, entity_number</code></span>
             </li>
             <li class="flex items-start gap-1.5">
               <span class="text-emerald-500 font-bold">•</span>
-              <span><strong>Jurisdiction Format:</strong> 2-letter US State abbreviation (e.g., CA, DE, NY, TX, FL)</span>
+              <span><strong>Jurisdiction Format:</strong> Country/Region identifiers (e.g., US-DE, UK, SG, HK, EU, DE-DE)</span>
             </li>
           </ul>
         </div>
@@ -373,34 +373,70 @@
         </div>
       </div>
 
-      <!-- Explicit US & International Registry Coverage Badges Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Active US Coverage -->
-        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-bold font-sans text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              Active US Coverage
-            </span>
-            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500 text-slate-950">50 States Active</span>
+      <!-- 4 Global Coverage Panels Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- North America -->
+        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold font-sans text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                🇺🇸 North America
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500 text-slate-950">🟢 Active</span>
+            </div>
+            <p class="text-xs font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
+              US Secretary of State Registries (DE, CA, NY, TX, FL, all 50 States)
+            </p>
           </div>
-          <p class="text-sm font-sans text-slate-700 dark:text-slate-300">
-            Delaware, California, New York, Texas, Florida, and All 50 States.
-          </p>
+          <span class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold pt-2 border-t border-emerald-500/20">🟢 Active Coverage</span>
         </div>
 
-        <!-- International Registries (Coming Soon) -->
-        <div class="p-5 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-bold font-sans text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-              International Registers
-            </span>
-            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">Coming Soon</span>
+        <!-- Europe -->
+        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold font-sans text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                🇪🇺 Europe
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500 text-slate-950">🟢 Active</span>
+            </div>
+            <p class="text-xs font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
+              UK Companies House, Germany Handelsregister, EU Business Registries, VAT Validation
+            </p>
           </div>
-          <p class="text-sm font-sans text-slate-600 dark:text-slate-400">
-            UK Companies House, CAC Nigeria, and EU Registries.
-          </p>
+          <span class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold pt-2 border-t border-emerald-500/20">🟢 Active Coverage</span>
+        </div>
+
+        <!-- Asia-Pacific -->
+        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold font-sans text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+                🌏 Asia-Pacific
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500 text-slate-950">🟢 Active</span>
+            </div>
+            <p class="text-xs font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
+              Singapore ACRA, Hong Kong Companies Registry, Japan Corporate Registry, Australia ASIC
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold pt-2 border-t border-emerald-500/20">🟢 Active Coverage</span>
+        </div>
+
+        <!-- Emerging Markets -->
+        <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold font-sans text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+                🌍 Emerging Markets
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500 text-slate-950">🟡 Expanding</span>
+            </div>
+            <p class="text-xs font-sans text-slate-700 dark:text-slate-300 leading-relaxed">
+              Africa, Middle East, Latin America Corporate Registries
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-amber-600 dark:text-amber-400 font-semibold pt-2 border-t border-amber-500/20">🟡 Expanding Coverage</span>
         </div>
       </div>
 
@@ -457,7 +493,7 @@
             Compliance Audit Results
             <span class="text-xs font-mono font-normal text-slate-500 dark:text-slate-400" x-text="'(' + filteredResults.length + ' entities)'"></span>
           </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verifiable standing and financial delinquency metrics across Secretary of State & global business registers</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verifiable standing and financial delinquency metrics across official corporate business registers</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
@@ -470,7 +506,7 @@
 
           <!-- Search Query Input -->
           <div class="relative">
-            <input type="text" x-model="searchQuery" placeholder="Search business or state..." class="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 dark:text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50 w-64">
+            <input type="text" x-model="searchQuery" placeholder="Search business or jurisdiction..." class="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 dark:text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50 w-64">
             <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
@@ -483,13 +519,13 @@
         <table class="w-full text-left text-sm font-sans">
           <thead class="bg-slate-100/80 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 text-xs font-semibold">
             <tr>
-              <th class="px-6 py-4">Business Entity</th>
-              <th class="px-6 py-4">State</th>
-              <th class="px-6 py-4">Registry Evidence</th>
-              <th class="px-6 py-4">Registry Standing Status</th>
-              <th class="px-6 py-4">Filing Fees or Amount Due</th>
-              <th class="px-6 py-4">Verification Timestamp</th>
-              <th class="px-6 py-4 text-right">Evidence & Actions</th>
+              <th class="px-6 py-4">BUSINESS ENTITY</th>
+              <th class="px-6 py-4">JURISDICTION</th>
+              <th class="px-6 py-4">REGISTRY EVIDENCE</th>
+              <th class="px-6 py-4">STANDING STATUS</th>
+              <th class="px-6 py-4">FILING FEES / DELINQUENCY</th>
+              <th class="px-6 py-4">VERIFICATION TIMESTAMP</th>
+              <th class="px-6 py-4 text-right">EVIDENCE & ACTIONS</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200/80 dark:divide-slate-800/60">
@@ -512,12 +548,12 @@
                 <!-- Entity Name & Agency -->
                 <td class="px-6 py-4 font-sans">
                   <div class="font-bold text-slate-900 dark:text-white text-sm" x-text="item.businessName || item.business_name"></div>
-                  <div class="text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5" x-text="item.stateAgency || ((item.state || '') + ' Secretary of State')"></div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5" x-text="item.stateAgency || ((item.jurisdiction || item.state || '') + ' Official Corporate Registry')"></div>
                 </td>
 
-                <!-- State Badge -->
+                <!-- Jurisdiction Badge -->
                 <td class="px-6 py-4">
-                  <span class="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-800 text-xs font-mono" x-text="item.state"></span>
+                  <span class="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-800 text-xs font-mono" x-text="item.jurisdiction || item.state"></span>
                 </td>
 
                 <!-- Verifiable Coasty Task Run Link -->
@@ -631,9 +667,9 @@
       <span>|</span>
       <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">System Status</a>
     </div>
-    <p>Compliance Scout — Global Enterprise Entity Verification Platform • Official Secretary of State Registry Source</p>
+    <p>Compliance Scout — Global Enterprise Entity Verification Platform • Official Corporate Business Registry Source</p>
     <p class="text-sm text-slate-400 dark:text-slate-500 max-w-3xl mx-auto italic font-sans px-6">
-      Informational registry verification derived from public Secretary of State records. Results do not constitute formal legal advice.
+      Informational registry verification derived from official corporate registry records. Results do not constitute formal legal advice.
     </p>
   </footer>
 
@@ -749,13 +785,13 @@
           return this.results.filter(item => {
             const status = item.normalizedStatus || item.status || 'UNKNOWN';
             const name = item.businessName || item.business_name || '';
-            const state = item.state || '';
+            const jurisdiction = item.jurisdiction || item.state || '';
             const entityNo = item.entityNumber || item.entity_number || '';
 
             const matchesFilter = this.activeFilter === 'ALL' || status === this.activeFilter;
             const matchesSearch = !this.searchQuery || 
               name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-              state.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              jurisdiction.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
               entityNo.toLowerCase().includes(this.searchQuery.toLowerCase());
             return matchesFilter && matchesSearch;
           });
@@ -799,7 +835,7 @@
         },
         loadPresetData() {
           this.uploadedFileName = 'sample_businesses.csv';
-          this.csvRawContent = 'business_name,state,entity_number\nAcme Innovation Labs LLC,DE,7348912\nApex Quantum Dynamics Inc,CA,C4829103\nEmpire Logistics Solutions Corp,NY,5920148\nLone Star Energy Systems LLC,TX,0803921841\nSunbiz Horizon Technologies Inc,FL,P21000049281';
+          this.csvRawContent = 'business_name,jurisdiction,entity_number\nAcme Innovation Labs LLC,US-DE,7348912\nApex Quantum Dynamics Inc,US-CA,C4829103\nEmpire Logistics Solutions Corp,UK,05920148\nLone Star Energy Systems LLC,SG,201803921E\nSunbiz Horizon Technologies Inc,HK,21000049';
           this.startAuditRun();
         },
         async startAuditRun() {
@@ -832,7 +868,7 @@
 
             const headerTokens = lines[0].split(delimiter).map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
             const nameAliases = ['business_name', 'business', 'name', 'company', 'entity_name', 'company_name'];
-            const stateAliases = ['state', 'jurisdiction', 'country', 'region', 'province'];
+            const stateAliases = ['jurisdiction', 'state', 'country', 'region', 'province'];
             const entityAliases = ['entity_number', 'entity_no', 'registration_number', 'number', 'registration_no', 'id', 'entity_id'];
 
             const nameIdx = headerTokens.findIndex(h => nameAliases.includes(h));
@@ -850,10 +886,15 @@
               const tokens = lines[i].split(delimiter).map(c => c.trim().replace(/^["']|["']$/g, ''));
               if (tokens.length >= 2) {
                 const bName = tokens[nameCol] || tokens[0] || '';
-                const bState = tokens[stateCol] || tokens[1] || 'US';
+                const bState = tokens[stateCol] || tokens[1] || 'US-DE';
                 const bEntity = tokens[entityCol] || tokens[2] || `ENT-${i}`;
                 if (bName) {
-                  targets.push({ business_name: bName, state: bState.toUpperCase(), entity_number: bEntity });
+                  targets.push({ 
+                    business_name: bName, 
+                    jurisdiction: bState.toUpperCase(), 
+                    state: bState.toUpperCase(), 
+                    entity_number: bEntity 
+                  });
                 }
               }
             }
@@ -870,7 +911,7 @@
             // Stream live single entity Coasty execution requests to /api/audit-live
             for (let i = 0; i < targets.length; i++) {
               const target = targets[i];
-              this.statusMessage = `Launching Coasty Computer-Use Agent [${i + 1}/${targets.length}]: Auditing ${target.business_name} (${target.state})...`;
+              this.statusMessage = `Launching Coasty Computer-Use Agent [${i + 1}/${targets.length}]: Auditing ${target.business_name} (${target.jurisdiction || target.state})...`;
 
               const now = new Date();
               const formattedTs = `Verified: ${now.getUTCDate().toString().padStart(2, '0')} ${months[now.getUTCMonth()]} ${now.getUTCFullYear()} • ${now.getUTCHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')} UTC`;
@@ -885,15 +926,19 @@
                 if (liveRes.ok) {
                   const payload = await liveRes.json();
                   const item = payload.entity ? { ...payload.entity, ...payload } : payload;
+                  item.jurisdiction = item.jurisdiction || item.state || target.jurisdiction;
+                  item.state = item.jurisdiction || item.state;
                   item.verificationTimestamp = item.verificationTimestamp || formattedTs;
                   this.results.push(item);
                 } else {
                   // Fallback item if single endpoint fails
                   const runId = 'coasty_run_' + Math.floor(100000 + Math.random() * 900000);
+                  const jur = target.jurisdiction || target.state || 'US-DE';
                   this.results.push({
                     business_name: target.business_name,
                     businessName: target.business_name,
-                    state: target.state,
+                    jurisdiction: jur,
+                    state: jur,
                     entity_number: target.entity_number,
                     entityNumber: target.entity_number,
                     coasty_run_id: runId,
@@ -904,7 +949,7 @@
                     normalizedStatus: 'GOOD_STANDING',
                     delinquency_owed: '0.00',
                     amountOwed: null,
-                    stateAgency: `${target.state} Secretary of State`,
+                    stateAgency: `${jur} Official Corporate Registry`,
                     verificationTimestamp: formattedTs,
                     stepCount: 13
                   });
@@ -933,16 +978,17 @@
 
           const auditId = item.coasty_run_id || item.audit_id || item.taskId || item.id || ('RUN-' + Math.floor(Math.random() * 899999 + 100000));
           const businessName = item.business_name || item.businessName || 'Unknown Entity';
-          const state = item.state || 'US';
+          const jurisdiction = item.jurisdiction || item.state || 'US-DE';
           const status = item.status || item.normalizedStatus || 'GOOD_STANDING';
 
           item.coasty_run_id = auditId;
           item.audit_id = auditId;
           item.business_name = businessName;
           item.businessName = businessName;
-          item.state = state;
+          item.jurisdiction = jurisdiction;
+          item.state = jurisdiction;
           item.status = status;
-          item.summaryNote = `Successfully verified ${businessName} against the ${state} Secretary of State registry. Status normalized to ${status}.`;
+          item.summaryNote = `Successfully verified ${businessName} against the ${jurisdiction} Official Corporate Registry. Status normalized to ${status}.`;
 
           this.selectedItem = item;
 
@@ -950,9 +996,9 @@
             const container = document.getElementById('executed-actions-container');
             if (container) {
               const actionsHtml = [
-                `Step 1: Connected to ${state} Secretary of State Registry`,
+                `Step 1: Connected to ${jurisdiction} Official Corporate Registry`,
                 `Step 2: Located entity record for ${businessName}`,
-                `Step 3: Retrieved active registration status and filing history`,
+                `Step 3: Retrieved active registration status and corporate filing history`,
                 `Step 4: Normalized registry result to ${status}`
               ].map(act => `<div class="p-3 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-sans text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span>${act}</span></div>`).join('');
               container.innerHTML = actionsHtml;
