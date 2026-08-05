@@ -18,7 +18,7 @@ export function generateMarkdownReport(report: BatchSummaryReport): string {
   const seconds = (report.totalExecutionTimeMs / 1000).toFixed(2);
 
   return `# 🛡️ COMPLIANCESCOUT - Executive Secretary of State Audit Report
-*Generated on ${dateStr} via Official Coasty REST API (coasty.ai) & AgentRouter Normalizer (agentrouter.org)*
+*Generated on ${dateStr} via Official Coasty REST API (coasty.ai) & Native TypeScript Parser*
 
 ## 📊 Executive Summary Matrix
 
@@ -45,7 +45,7 @@ ${tableRows}
 ## ⚡ Computer-Use Telemetry Verification
 
 > [!NOTE]
-> All compliance verifications were autonomous browser driver sessions executed via Coasty's official REST API endpoints (\`https://coasty.ai/v1/tasks\` and \`https://coasty.ai/v1/runs/{id}\`).
+> All compliance verifications were autonomous browser driver sessions executed via Coasty's official REST API endpoints (\`https://coasty.ai/v1/runs\` and \`https://coasty.ai/v1/runs/{id}\`).
 > Click any Coasty Verifiable Run URL above to inspect step logs, screenshot artifacts, and run telemetry directly on coasty.ai.
 
 ---

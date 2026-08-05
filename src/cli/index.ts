@@ -94,9 +94,6 @@ export async function runCli(): Promise<void> {
       outputDir: path.resolve(process.cwd(), options.outputDir, 'artifacts'),
       coastyApiKey: options.coastyKey
     },
-    agentRouterConfig: {
-      apiKey: options.agentrouterKey
-    },
     onProgressUpdate: (result, current, total) => {
       TerminalPresenter.printStepProgress(result, current, total);
     }

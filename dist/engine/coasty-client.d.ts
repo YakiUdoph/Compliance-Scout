@@ -5,6 +5,7 @@ export interface CoastyTaskRequest {
 }
 export interface CoastyTaskResponse {
     id: string;
+    runId: string;
     taskId: string;
     status: 'queued' | 'running' | 'completed' | 'failed';
     runUrl: string;
@@ -20,6 +21,7 @@ export interface CoastyRunStep {
 }
 export interface CoastyRunResult {
     id: string;
+    runId: string;
     taskId: string;
     status: 'completed' | 'failed';
     runUrl: string;
@@ -42,13 +44,13 @@ export declare class CoastyClient {
     private pollIntervalMs;
     constructor(options?: CoastyClientOptions);
     /**
-     * Submits a browser automation task to Coasty's official API endpoint POST /v1/tasks
+     * Dispatches a browser automation task to Coasty's REST API endpoint POST /v1/runs
      */
     createTask(request: CoastyTaskRequest): Promise<CoastyTaskResponse>;
     /**
      * Polls Coasty run status endpoint GET /v1/runs/{id} until task is completed or failed
      */
-    pollRunUntilCompletion(taskId: string, onStepProgress?: (step: CoastyRunStep, current: number, total: number) => void): Promise<CoastyRunResult>;
+    pollRunUntilCompletion(runId: string, onStepProgress?: (step: CoastyRunStep, current: number, total: number) => void): Promise<CoastyRunResult>;
     private simulateCoastyRun;
     private isLiveKeyConfigured;
 }

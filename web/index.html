@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>COMPLIANCESCOUT — Autonomous Secretary of State Compliance Engine</title>
-  <meta name="description" content="Autonomous Secretary of State compliance engine powered by Coasty computer-use agents and AgentRouter LLM status normalization.">
+  <meta name="description" content="Autonomous Secretary of State compliance engine powered by Coasty computer-use agents and zero-dependency native TypeScript status parsing.">
   
   <!-- Tailwind CSS & Alpine.js -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -75,7 +75,7 @@
             COMPLIANCESCOUT
             <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">v1.0</span>
           </h1>
-          <p class="text-xs text-slate-400 font-mono">Backend Proxy: http://localhost:3000 • Coasty REST API</p>
+          <p class="text-xs text-slate-400 font-mono">Backend Proxy: /api/* • Coasty REST API & Native TS Parser</p>
         </div>
       </div>
 
@@ -99,7 +99,7 @@
     </h2>
 
     <p class="mt-4 text-base text-slate-300 max-w-2xl mx-auto font-light">
-      Driven by Coasty browser agents via official REST API (<code class="text-emerald-400 font-mono">coasty.ai</code>) and normalized by AgentRouter (<code class="text-emerald-400 font-mono">agentrouter.org</code>). Keys remain 100% secure server-side.
+      Driven by Coasty browser agents via official REST API (<code class="text-emerald-400 font-mono">coasty.ai</code>) and normalized natively in TypeScript. Zero external LLM dependencies.
     </p>
   </section>
 
@@ -154,7 +154,7 @@
               </div>
             </template>
             <div x-show="activeStepLogs.length === 0" class="h-full flex items-center justify-center text-slate-500 italic">
-              Telemetry feed ready. Trigger audit to observe live Coasty Task IDs...
+              Telemetry feed ready. Trigger audit to observe live Coasty Task Run IDs...
             </div>
           </div>
         </div>
@@ -272,7 +272,7 @@
         async startAuditRun() {
           this.isRunning = true;
           this.progressPercent = 20;
-          this.statusMessage = 'Submitting task payload to http://localhost:3000/api/audit...';
+          this.statusMessage = 'Submitting task payload to /api/audit...';
 
           try {
             const res = await fetch('/api/audit', {

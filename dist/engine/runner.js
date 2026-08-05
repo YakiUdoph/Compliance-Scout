@@ -2,7 +2,7 @@ import pLimit from 'p-limit';
 import fs from 'fs';
 import path from 'path';
 import { CoastyWorkflowEvaluator } from './evaluator.js';
-import { AgentRouterNormalizer } from '../normalizer/agent-router.js';
+import { parseEntityStatus } from '../normalizer/parser.js';
 const stateConfigsPath = path.resolve(process.cwd(), 'config', 'states.json');
 const STATE_CONFIGS = fs.existsSync(stateConfigsPath)
     ? JSON.parse(fs.readFileSync(stateConfigsPath, 'utf-8'))
@@ -10,16 +10,15 @@ const STATE_CONFIGS = fs.existsSync(stateConfigsPath)
 export class BatchComplianceRunner {
     concurrency;
     evaluator;
-    normalizer;
     onProgressUpdate;
     constructor(options = {}) {
         this.concurrency = options.concurrency || Number(process.env.CONCURRENCY_LIMIT) || 3;
         this.evaluator = new CoastyWorkflowEvaluator(options.evaluatorOptions);
-        this.normalizer = new AgentRouterNormalizer(options.agentRouterConfig);
         this.onProgressUpdate = options.onProgressUpdate;
     }
     /**
-     * Executes compliance checks across a batch of businesses concurrently
+     * Executes compliance checks across a batch of businesses concurrently using Coasty API
+     * and local native TypeScript parsing.
      */
     async runBatch(businesses) {
         const startTime = Date.now();
@@ -31,8 +30,8 @@ export class BatchComplianceRunner {
                 const evalOutput = await this.evaluator.evaluateEntity(business);
                 const stateCode = business.state.toUpperCase();
                 const stateMeta = STATE_CONFIGS[stateCode] || { agency: `${stateCode} Secretary of State` };
-                // Normalize raw status via AgentRouter HTTP endpoint (agentrouter.org)
-                const normalized = await this.normalizer.normalizeStatus(evalOutput.rawStatusText, stateCode, evalOutput.rawAmountOwedText);
+                // Zero-dependency local native TypeScript status parsing
+                const normalized = parseEntityStatus(evalOutput.rawStatusText + (evalOutput.rawAmountOwedText ? ` Fees Owed: ${evalOutput.rawAmountOwedText}` : ''));
                 const complianceResult = {
                     id: `CS-${stateCode}-${business.entity_number}`,
                     taskId: evalOutput.taskId,
@@ -43,7 +42,7 @@ export class BatchComplianceRunner {
                     entityNumber: business.entity_number,
                     rawStatus: evalOutput.rawStatusText,
                     normalizedStatus: normalized.status,
-                    amountOwed: normalized.amountOwed,
+                    amountOwed: normalized.amountOwed || evalOutput.rawAmountOwedText,
                     summaryNote: normalized.summaryNote,
                     screenshotPath: evalOutput.screenshotPath,
                     certPdfPath: evalOutput.certPdfPath,

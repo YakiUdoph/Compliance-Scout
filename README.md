@@ -2,13 +2,14 @@
 
 # 🛡️ COMPLIANCESCOUT
 
-**Autonomous Secretary of State Compliance Engine Powered by Official Coasty REST API & AgentRouter LLM Normalization.**
+**Autonomous Secretary of State Compliance Engine Powered by Official Coasty REST API & Native TypeScript Parser.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20.0.0-339933.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6.svg)](https://www.typescriptlang.org/)
 [![Coasty REST API](https://img.shields.io/badge/Coasty%20API-coasty.ai-10B981.svg)](https://coasty.ai)
-[![AgentRouter](https://img.shields.io/badge/Normalizer-agentrouter.org-6366F1.svg)](https://agentrouter.org)
+[![Parser](https://img.shields.io/badge/Normalizer-Native%20TypeScript-6366F1.svg)](#local-native-parser-srcnormalizerparserts)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel%20Serverless-000000.svg)](#vercel-deployment-verceljson)
 [![Contest](https://img.shields.io/badge/Coasty%20Hackathon-$500%20Contest-FFD700.svg)](#hackathon--contest-submission)
 
 [Live Web Dashboard](web/index.html) • [Quickstart Guide](#quickstart) • [Integration Test](#verification-test-suite) • [Add a 6th State](#how-to-add-a-6th-state-in-1-file)
@@ -19,13 +20,13 @@
 
 ## 📌 Executive Summary & Value Proposition
 
-Corporate entity compliance across US states is broken due to a lack of state government APIs. Checking entity standing, franchise tax delinquencies, or administrative revocations requires manually driving state web portals.
+Corporate entity compliance across US states is severely broken due to a lack of government APIs. Checking entity standing, franchise tax delinquencies, or administrative revocations requires manually driving state web portals.
 
 **COMPLIANCESCOUT solves this problem with enterprise-grade architecture:**
 
-1. **Official Coasty REST API Integration (`coasty.ai`)**: Submits browser tasks to `POST https://coasty.ai/v1/tasks` and polls `GET https://coasty.ai/v1/runs/{id}`. Every audit result attaches a verifiable **Coasty Task Run URL** (`https://coasty.ai/v1/runs/{taskId}`).
-2. **AgentRouter LLM Status Normalization (`agentrouter.org`)**: Calls `https://agentrouter.org/v1/chat/completions` to normalize disparate legal terminology into a strict Zod schema (`GOOD_STANDING`, `DELINQUENT`, `FORFEITED`, `UNKNOWN`).
-3. **Secure Express Backend Server (`src/server.ts`)**: Runs locally on `http://localhost:3000`. API keys (`SK_COASTY_KEY` & `AGENTROUTER_API_KEY`) remain 100% server-side in `.env`, shielding secrets from client JavaScript.
+1. **Official Coasty REST API Integration (`coasty.ai`)**: Submits browser tasks to `POST https://coasty.ai/v1/runs` and polls `GET https://coasty.ai/v1/runs/{id}`. Every audit result attaches a verifiable **Coasty Task Run URL** (`https://coasty.ai/v1/runs/{runId}`).
+2. **Zero-Dependency Native Status Parser (`src/normalizer/parser.ts`)**: Fast, local TypeScript parser extracting structured JSON blocks and regex legal keyword tags (`GOOD_STANDING`, `DELINQUENT`, `FORFEITED`, `UNKNOWN`). Zero external LLM dependencies.
+3. **Local Express Proxy & Vercel Serverless Ready (`vercel.json`)**: Runs locally on `http://localhost:3000` or deploys seamlessly to Vercel serverless functions. API keys (`COASTY_API_KEY`) stay 100% server-side.
 
 ---
 
@@ -36,20 +37,20 @@ Corporate entity compliance across US states is broken due to a lack of state go
         │
         │ HTTP Requests (NO API KEYS EXPOSED)
         ▼
-  Express Backend Server (http://localhost:3000/api/*)
-        │ Reads SK_COASTY_KEY & AGENTROUTER_API_KEY from .env
+  Express Backend Server / Vercel Serverless (http://localhost:3000/api/*)
+        │ Reads COASTY_API_KEY from process environment
         │
         ├───────────────────────────────────────┐
         ▼                                       ▼
-  Coasty REST API                         AgentRouter API
-  POST https://coasty.ai/v1/tasks         POST https://agentrouter.org/v1/chat/completions
-  GET  https://coasty.ai/v1/runs/{id}      (Normalizes Raw Status into Zod Schema)
+  Coasty REST API                         Native TypeScript Parser
+  POST https://coasty.ai/v1/runs          src/normalizer/parser.ts
+  GET  https://coasty.ai/v1/runs/{id}     (JSON Regex & Keyword Normalization)
         │                                       │
         └───────────────────┬───────────────────┘
                             │
                             ▼
                Verifiable Compliance Audit Output:
-               - Coasty Task Run URL: https://coasty.ai/v1/runs/{taskId}
+               - Coasty Task Run URL: https://coasty.ai/v1/runs/{runId}
                - COMPLIANCE_REPORT.md
                - dashboard.html
 ```
@@ -81,8 +82,7 @@ cp .env.example .env
 
 Edit `.env`:
 ```env
-SK_COASTY_KEY=sk_coasty_your_live_key
-AGENTROUTER_API_KEY=ar_your_agentrouter_key
+COASTY_API_KEY=sk_coasty_your_live_key
 PORT=3000
 ```
 
@@ -98,10 +98,16 @@ npm run server
 
 ### 3. Verification Test Suite
 
-Run the automated integration test against Coasty & AgentRouter endpoints:
+Run the automated integration test against Coasty REST API endpoints:
 
 ```bash
 npm run test:coasty
+```
+
+### 4. Vercel Deployment (`vercel.json`)
+
+```bash
+npx vercel
 ```
 
 ---
@@ -125,7 +131,10 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
     promptTemplate: `Navigate to Georgia Secretary of State Business Search at https://ecorp.sos.ga.gov/BusinessSearch.
 1. Input "{BUSINESS_NAME}" into the search field and submit query.
 2. Click target matching entity.
-3. Read raw standing status, screenshot page, and download Certificate of Existence or log annual report balance owed.`
+3. Read raw standing status, screenshot page, and download Certificate of Existence or log annual report balance owed.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "..." }`
   }
 };
 ```
@@ -136,5 +145,5 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 
 Created for **Coasty's $500 Computer-Use Contest** (`@coastyai`):
 - **Coasty Target Host**: `https://coasty.ai/v1`
-- **AgentRouter Target Host**: `https://agentrouter.org/v1`
-- **Security**: Key separation via local Express proxy server.
+- **Zero External LLMs**: Native TypeScript parsing in `src/normalizer/parser.ts`.
+- **Security**: Key separation via local Express proxy server and Vercel serverless deployment (`vercel.json`).

@@ -10,7 +10,7 @@ export class TerminalPresenter {
 \x1b[36m\\____//_/    /_/  /_//_/    /_____//___//_/  |_/_/|_/ \\____/ /_____//____/\\____/ \\____/_____/\x1b[0m
 
 \x1b[1m\x1b[32m  🛡️  COMPLIANCESCOUT v1.0.0\x1b[0m - \x1b[90mAutonomous Secretary of State Compliance Engine\x1b[0m
-\x1b[90m  Powered by Coasty Computer-Use Agents & AgentRouter LLM Status Normalizer\x1b[0m
+\x1b[90m  Powered by Coasty Computer-Use Agents & Native TypeScript Status Parser\x1b[0m
 `);
   }
 

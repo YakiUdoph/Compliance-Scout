@@ -21,7 +21,10 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 4. On the Entity Detail page, read and extract the raw legal status text (e.g., "Active", "In Good Standing", "Forfeited", "Revoked").
 5. Take a screenshot of the entity detail view.
 6. IF status indicates delinquent or taxes due: Navigate to the Tax Payment section, read the outstanding Delaware Franchise Tax balance owed (stop before submitting payment), and record the payment URL.
-7. ELSE IF status is In Good Standing: Click the Request Certificate of Good Standing button and download the official PDF.`
+7. ELSE IF status is In Good Standing: Click the Request Certificate of Good Standing button and download the official PDF.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "Summary of DE entity compliance standing" }`
   },
   CA: {
     stateCode: 'CA',
@@ -36,7 +39,10 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 4. On the Entity Detail page, read the status badge (e.g., "Active", "FTB Suspended", "SOS Suspended", "Dissolved").
 5. Take a screenshot of the entity record page.
 6. IF status is suspended or statement of information is past due: Click the Statement of Information link, read the penalty fee and amount due (e.g., "$800.00"), and log the filing link.
-7. ELSE: Click the Request Certificate of Status button and download the PDF.`
+7. ELSE: Click the Request Certificate of Status button and download the PDF.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "Summary of CA entity compliance standing" }`
   },
   NY: {
     stateCode: 'NY',
@@ -51,7 +57,10 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 4. Read the raw legal entity status text (e.g., "Active", "Inactive", "Past Due Date").
 5. Capture a clear screenshot of the DOS entity inquiry result view.
 6. IF past due on Biennial Statement: Navigate to the Biennial Statement portal, capture the filing fee owed (e.g., "$9.00"), and copy the filing link.
-7. ELSE: Request the Certificate of Status PDF.`
+7. ELSE: Request the Certificate of Status PDF.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "Summary of NY entity compliance standing" }`
   },
   TX: {
     stateCode: 'TX',
@@ -66,7 +75,10 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 4. Locate the "Right to Transact Business in Texas" field and read the raw text (e.g., "ACTIVE", "FRANCHISE TAX INACTIVE", "FORFEITED").
 5. Take a screenshot of the Texas Comptroller detail view.
 6. IF balance is due or right to transact is forfeited: Read the outstanding Franchise Tax balance (e.g., "$150.00") and log the Webfile filing link.
-7. ELSE: Click Certificate of Fact and download the PDF.`
+7. ELSE: Click Certificate of Fact and download the PDF.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "Summary of TX entity compliance standing" }`
   },
   FL: {
     stateCode: 'FL',
@@ -81,6 +93,9 @@ export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
 4. Read the Status field in the Detail Section (e.g., "ACTIVE", "INACTIVE", "ADMIN DISSOLVED").
 5. Capture a full screenshot of the Sunbiz corporate record page.
 6. IF annual report is delinquent: Click the e-Filing Annual Report link, extract the late fee and balance owed (e.g., "$138.75"), and record the URL.
-7. ELSE: Download the Certificate of Status PDF.`
+7. ELSE: Download the Certificate of Status PDF.
+
+Output ONLY a raw JSON block at the end:
+{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "Summary of FL entity compliance standing" }`
   }
 };

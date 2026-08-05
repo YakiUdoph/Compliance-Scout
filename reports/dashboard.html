@@ -33,7 +33,7 @@
         </div>
         <div>
           <h1 class="text-lg font-bold tracking-tight text-white">COMPLIANCESCOUT</h1>
-          <p class="text-xs text-slate-400 font-mono">Official Coasty REST API (coasty.ai) • AgentRouter (agentrouter.org)</p>
+          <p class="text-xs text-slate-400 font-mono">Official Coasty REST API (coasty.ai) • Native TypeScript Status Parser</p>
         </div>
       </div>
       <span class="px-3 py-1 text-xs font-mono rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -49,13 +49,13 @@
   "forfeitedCount": 1,
   "unknownCount": 0,
   "totalOwedFormatted": "$950.00",
-  "totalExecutionTimeMs": 1735,
+  "totalExecutionTimeMs": 1592,
   "totalAutomatedSteps": 65,
   "results": [
     {
       "id": "CS-DE-7348912",
-      "taskId": "coasty_run_702317",
-      "runUrl": "https://coasty.ai/v1/runs/coasty_run_702317",
+      "taskId": "coasty_run_299737",
+      "runUrl": "https://coasty.ai/v1/runs/coasty_run_299737",
       "businessName": "Acme Innovation Labs LLC",
       "state": "DE",
       "stateAgency": "Delaware Division of Corporations",
@@ -63,7 +63,7 @@
       "rawStatus": "Active / In Good Standing",
       "normalizedStatus": "GOOD_STANDING",
       "amountOwed": null,
-      "summaryNote": "Entity in DE evaluated as GOOD STANDING. Raw status: \"Active / In Good Standing\".",
+      "summaryNote": "Native TypeScript parser evaluated status as GOOD STANDING. Raw text: \"Active / In Good Standing...\".",
       "screenshotPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\DE_acme_innovation_labs_llc_detail.png",
       "certPdfPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\DE_acme_innovation_labs_llc_cert.pdf",
       "filingUrl": null,
@@ -74,100 +74,100 @@
           "action": "wait",
           "description": "Initialize Coasty browser container",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 2,
           "action": "type_text",
-          "description": "Enter business name into SOS search form",
+          "description": "Enter business entity name into search form",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 3,
           "action": "click",
-          "description": "Click search submission button",
+          "description": "Click search submit button",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 4,
           "action": "scroll",
           "description": "Scroll search results grid into view",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 5,
           "action": "click",
-          "description": "Select matching entity record details",
+          "description": "Select matching entity record link",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 6,
           "action": "assert",
           "description": "Assert entity detail view loaded",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 7,
           "action": "screenshot",
-          "description": "Capture screenshot of entity portal detail page",
+          "description": "Capture screenshot of entity portal record",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 8,
           "action": "extract",
-          "description": "Extract raw legal status element text",
+          "description": "Extract raw legal status text and fee tags",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 9,
           "action": "wait",
-          "description": "Check filing and annual report requirements",
+          "description": "Evaluate annual report or franchise tax requirements",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 10,
           "action": "click",
-          "description": "Branch: Check statement of info / franchise tax status",
+          "description": "Branch: Check statement of info / franchise tax balance",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 11,
           "action": "extract",
-          "description": "Branch: Read penalty or annual report amount owed",
+          "description": "Branch: Read outstanding balance or late fee",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 12,
           "action": "click",
           "description": "Branch: Request Certificate of Good Standing PDF",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 13,
           "action": "wait",
-          "description": "Log Coasty run task telemetry",
+          "description": "Log Coasty run task telemetry and JSON output",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         }
       ],
-      "executionTimeMs": 874,
-      "timestamp": "2026-08-05T01:18:50.380Z"
+      "executionTimeMs": 808,
+      "timestamp": "2026-08-05T01:53:27.586Z"
     },
     {
       "id": "CS-CA-C4829103",
-      "taskId": "coasty_run_679216",
-      "runUrl": "https://coasty.ai/v1/runs/coasty_run_679216",
+      "taskId": "coasty_run_100227",
+      "runUrl": "https://coasty.ai/v1/runs/coasty_run_100227",
       "businessName": "Apex Quantum Dynamics Inc",
       "state": "CA",
       "stateAgency": "California Secretary of State (bizfileOnline)",
@@ -175,7 +175,7 @@
       "rawStatus": "FTB Suspended / Statement of Info Past Due",
       "normalizedStatus": "FORFEITED",
       "amountOwed": "$800.00",
-      "summaryNote": "Entity in CA evaluated as FORFEITED. Raw status: \"FTB Suspended / Statement of Info Past Due\".",
+      "summaryNote": "Native TypeScript parser evaluated status as FORFEITED. Raw text: \"FTB Suspended / Statement of Info Past Due Fees Owed: $800.00...\".",
       "screenshotPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\CA_apex_quantum_dynamics_inc_detail.png",
       "certPdfPath": null,
       "filingUrl": "https://bizfileonline.sos.ca.gov/search/business?entity=C4829103&filing=annual_report",
@@ -186,100 +186,100 @@
           "action": "wait",
           "description": "Initialize Coasty browser container",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 2,
           "action": "type_text",
-          "description": "Enter business name into SOS search form",
+          "description": "Enter business entity name into search form",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 3,
           "action": "click",
-          "description": "Click search submission button",
+          "description": "Click search submit button",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 4,
           "action": "scroll",
           "description": "Scroll search results grid into view",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 5,
           "action": "click",
-          "description": "Select matching entity record details",
+          "description": "Select matching entity record link",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 6,
           "action": "assert",
           "description": "Assert entity detail view loaded",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 7,
           "action": "screenshot",
-          "description": "Capture screenshot of entity portal detail page",
+          "description": "Capture screenshot of entity portal record",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 8,
           "action": "extract",
-          "description": "Extract raw legal status element text",
+          "description": "Extract raw legal status text and fee tags",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 9,
           "action": "wait",
-          "description": "Check filing and annual report requirements",
+          "description": "Evaluate annual report or franchise tax requirements",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 10,
           "action": "click",
-          "description": "Branch: Check statement of info / franchise tax status",
+          "description": "Branch: Check statement of info / franchise tax balance",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 11,
           "action": "extract",
-          "description": "Branch: Read penalty or annual report amount owed",
+          "description": "Branch: Read outstanding balance or late fee",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 12,
           "action": "click",
           "description": "Branch: Request Certificate of Good Standing PDF",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 13,
           "action": "wait",
-          "description": "Log Coasty run task telemetry",
+          "description": "Log Coasty run task telemetry and JSON output",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         }
       ],
-      "executionTimeMs": 873,
-      "timestamp": "2026-08-05T01:18:50.381Z"
+      "executionTimeMs": 808,
+      "timestamp": "2026-08-05T01:53:27.587Z"
     },
     {
       "id": "CS-NY-5920148",
-      "taskId": "coasty_run_979779",
-      "runUrl": "https://coasty.ai/v1/runs/coasty_run_979779",
+      "taskId": "coasty_run_651195",
+      "runUrl": "https://coasty.ai/v1/runs/coasty_run_651195",
       "businessName": "Empire Logistics Solutions Corp",
       "state": "NY",
       "stateAgency": "New York Department of State (Division of Corporations)",
@@ -287,7 +287,7 @@
       "rawStatus": "Active / In Good Standing",
       "normalizedStatus": "GOOD_STANDING",
       "amountOwed": null,
-      "summaryNote": "Entity in NY evaluated as GOOD STANDING. Raw status: \"Active / In Good Standing\".",
+      "summaryNote": "Native TypeScript parser evaluated status as GOOD STANDING. Raw text: \"Active / In Good Standing...\".",
       "screenshotPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\NY_empire_logistics_solutions_corp_detail.png",
       "certPdfPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\NY_empire_logistics_solutions_corp_cert.pdf",
       "filingUrl": null,
@@ -298,100 +298,100 @@
           "action": "wait",
           "description": "Initialize Coasty browser container",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 2,
           "action": "type_text",
-          "description": "Enter business name into SOS search form",
+          "description": "Enter business entity name into search form",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 3,
           "action": "click",
-          "description": "Click search submission button",
+          "description": "Click search submit button",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 4,
           "action": "scroll",
           "description": "Scroll search results grid into view",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 5,
           "action": "click",
-          "description": "Select matching entity record details",
+          "description": "Select matching entity record link",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 6,
           "action": "assert",
           "description": "Assert entity detail view loaded",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 7,
           "action": "screenshot",
-          "description": "Capture screenshot of entity portal detail page",
+          "description": "Capture screenshot of entity portal record",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 8,
           "action": "extract",
-          "description": "Extract raw legal status element text",
+          "description": "Extract raw legal status text and fee tags",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 9,
           "action": "wait",
-          "description": "Check filing and annual report requirements",
+          "description": "Evaluate annual report or franchise tax requirements",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 10,
           "action": "click",
-          "description": "Branch: Check statement of info / franchise tax status",
+          "description": "Branch: Check statement of info / franchise tax balance",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 11,
           "action": "extract",
-          "description": "Branch: Read penalty or annual report amount owed",
+          "description": "Branch: Read outstanding balance or late fee",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 12,
           "action": "click",
           "description": "Branch: Request Certificate of Good Standing PDF",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         },
         {
           "stepNumber": 13,
           "action": "wait",
-          "description": "Log Coasty run task telemetry",
+          "description": "Log Coasty run task telemetry and JSON output",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:49.508Z"
+          "timestamp": "2026-08-05T01:53:26.779Z"
         }
       ],
-      "executionTimeMs": 874,
-      "timestamp": "2026-08-05T01:18:50.382Z"
+      "executionTimeMs": 808,
+      "timestamp": "2026-08-05T01:53:27.587Z"
     },
     {
       "id": "CS-TX-0803921841",
-      "taskId": "coasty_run_326504",
-      "runUrl": "https://coasty.ai/v1/runs/coasty_run_326504",
+      "taskId": "coasty_run_660871",
+      "runUrl": "https://coasty.ai/v1/runs/coasty_run_660871",
       "businessName": "Lone Star Energy Systems LLC",
       "state": "TX",
       "stateAgency": "Texas Comptroller of Public Accounts (Taxable Entity Search)",
@@ -399,7 +399,7 @@
       "rawStatus": "Not in Good Standing / Franchise Tax Balance Due",
       "normalizedStatus": "DELINQUENT",
       "amountOwed": "$150.00",
-      "summaryNote": "Entity in TX evaluated as DELINQUENT. Raw status: \"Not in Good Standing / Franchise Tax Balance Due\". Financial delinquency captured: $150.00.",
+      "summaryNote": "Native TypeScript parser evaluated status as DELINQUENT. Raw text: \"Not in Good Standing / Franchise Tax Balance Due Fees Owed: $150.00...\".",
       "screenshotPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\TX_lone_star_energy_systems_llc_detail.png",
       "certPdfPath": null,
       "filingUrl": "https://mycpa.cpa.state.tx.us/coa/?entity=0803921841&filing=annual_report",
@@ -410,100 +410,100 @@
           "action": "wait",
           "description": "Initialize Coasty browser container",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 2,
           "action": "type_text",
-          "description": "Enter business name into SOS search form",
+          "description": "Enter business entity name into search form",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 3,
           "action": "click",
-          "description": "Click search submission button",
+          "description": "Click search submit button",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 4,
           "action": "scroll",
           "description": "Scroll search results grid into view",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 5,
           "action": "click",
-          "description": "Select matching entity record details",
+          "description": "Select matching entity record link",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 6,
           "action": "assert",
           "description": "Assert entity detail view loaded",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 7,
           "action": "screenshot",
-          "description": "Capture screenshot of entity portal detail page",
+          "description": "Capture screenshot of entity portal record",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 8,
           "action": "extract",
-          "description": "Extract raw legal status element text",
+          "description": "Extract raw legal status text and fee tags",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 9,
           "action": "wait",
-          "description": "Check filing and annual report requirements",
+          "description": "Evaluate annual report or franchise tax requirements",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 10,
           "action": "click",
-          "description": "Branch: Check statement of info / franchise tax status",
+          "description": "Branch: Check statement of info / franchise tax balance",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 11,
           "action": "extract",
-          "description": "Branch: Read penalty or annual report amount owed",
+          "description": "Branch: Read outstanding balance or late fee",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 12,
           "action": "click",
           "description": "Branch: Request Certificate of Good Standing PDF",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         },
         {
           "stepNumber": 13,
           "action": "wait",
-          "description": "Log Coasty run task telemetry",
+          "description": "Log Coasty run task telemetry and JSON output",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.381Z"
+          "timestamp": "2026-08-05T01:53:27.586Z"
         }
       ],
-      "executionTimeMs": 858,
-      "timestamp": "2026-08-05T01:18:51.239Z"
+      "executionTimeMs": 783,
+      "timestamp": "2026-08-05T01:53:28.369Z"
     },
     {
       "id": "CS-FL-P21000049281",
-      "taskId": "coasty_run_945502",
-      "runUrl": "https://coasty.ai/v1/runs/coasty_run_945502",
+      "taskId": "coasty_run_323951",
+      "runUrl": "https://coasty.ai/v1/runs/coasty_run_323951",
       "businessName": "Sunbiz Horizon Technologies Inc",
       "state": "FL",
       "stateAgency": "Florida Department of State (Sunbiz)",
@@ -511,7 +511,7 @@
       "rawStatus": "Active / In Good Standing",
       "normalizedStatus": "GOOD_STANDING",
       "amountOwed": null,
-      "summaryNote": "Entity in FL evaluated as GOOD STANDING. Raw status: \"Active / In Good Standing\".",
+      "summaryNote": "Native TypeScript parser evaluated status as GOOD STANDING. Raw text: \"Active / In Good Standing...\".",
       "screenshotPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\FL_sunbiz_horizon_technologies_inc_detail.png",
       "certPdfPath": "C:\\Users\\PC\\Desktop\\CSCOUT\\reports\\artifacts\\FL_sunbiz_horizon_technologies_inc_cert.pdf",
       "filingUrl": null,
@@ -522,95 +522,95 @@
           "action": "wait",
           "description": "Initialize Coasty browser container",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 2,
           "action": "type_text",
-          "description": "Enter business name into SOS search form",
+          "description": "Enter business entity name into search form",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 3,
           "action": "click",
-          "description": "Click search submission button",
+          "description": "Click search submit button",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 4,
           "action": "scroll",
           "description": "Scroll search results grid into view",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 5,
           "action": "click",
-          "description": "Select matching entity record details",
+          "description": "Select matching entity record link",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 6,
           "action": "assert",
           "description": "Assert entity detail view loaded",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 7,
           "action": "screenshot",
-          "description": "Capture screenshot of entity portal detail page",
+          "description": "Capture screenshot of entity portal record",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 8,
           "action": "extract",
-          "description": "Extract raw legal status element text",
+          "description": "Extract raw legal status text and fee tags",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 9,
           "action": "wait",
-          "description": "Check filing and annual report requirements",
+          "description": "Evaluate annual report or franchise tax requirements",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 10,
           "action": "click",
-          "description": "Branch: Check statement of info / franchise tax status",
+          "description": "Branch: Check statement of info / franchise tax balance",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 11,
           "action": "extract",
-          "description": "Branch: Read penalty or annual report amount owed",
+          "description": "Branch: Read outstanding balance or late fee",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 12,
           "action": "click",
           "description": "Branch: Request Certificate of Good Standing PDF",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         },
         {
           "stepNumber": 13,
           "action": "wait",
-          "description": "Log Coasty run task telemetry",
+          "description": "Log Coasty run task telemetry and JSON output",
           "status": "SUCCESS",
-          "timestamp": "2026-08-05T01:18:50.382Z"
+          "timestamp": "2026-08-05T01:53:27.587Z"
         }
       ],
-      "executionTimeMs": 858,
-      "timestamp": "2026-08-05T01:18:51.240Z"
+      "executionTimeMs": 782,
+      "timestamp": "2026-08-05T01:53:28.369Z"
     }
   ]
 }, search: '' }">

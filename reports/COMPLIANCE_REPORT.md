@@ -1,5 +1,5 @@
 # 🛡️ COMPLIANCESCOUT - Executive Secretary of State Audit Report
-*Generated on 2026-08-05 via Official Coasty REST API (coasty.ai) & AgentRouter Normalizer (agentrouter.org)*
+*Generated on 2026-08-05 via Official Coasty REST API (coasty.ai) & Native TypeScript Parser*
 
 ## 📊 Executive Summary Matrix
 
@@ -11,7 +11,7 @@
 | **Administrative Forfeitures** | ⛔ `1` |
 | **Total Outstanding Delinquency Fees** | **$950.00** |
 | **Total Computer-Use Micro-Steps Executed** | ⚡ `65` steps |
-| **Batch Runtime Duration** | ⏱️ `1.74s` |
+| **Batch Runtime Duration** | ⏱️ `1.59s` |
 
 ---
 
@@ -19,18 +19,18 @@
 
 | Business Entity Name | State | Entity # | Coasty Verifiable Run URL | Raw State Status | Normalized Status | Fees Owed | Certificate PDF |
 | :--- | :---: | :---: | :---: | :--- | :---: | :---: | :---: |
-| **Acme Innovation Labs LLC** | `DE` | `7348912` | [`coasty_run_702317`](https://coasty.ai/v1/runs/coasty_run_702317) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\DE_acme_innovation_labs_llc_cert.pdf) |
-| **Apex Quantum Dynamics Inc** | `CA` | `C4829103` | [`coasty_run_679216`](https://coasty.ai/v1/runs/coasty_run_679216) | FTB Suspended / Statement of Info Past Due | ⛔ FORFEITED | **$800.00** | N/A (Delinquent) |
-| **Empire Logistics Solutions Corp** | `NY` | `5920148` | [`coasty_run_979779`](https://coasty.ai/v1/runs/coasty_run_979779) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\NY_empire_logistics_solutions_corp_cert.pdf) |
-| **Lone Star Energy Systems LLC** | `TX` | `0803921841` | [`coasty_run_326504`](https://coasty.ai/v1/runs/coasty_run_326504) | Not in Good Standing / Franchise Tax Balance Due | 🔴 DELINQUENT | **$150.00** | N/A (Delinquent) |
-| **Sunbiz Horizon Technologies Inc** | `FL` | `P21000049281` | [`coasty_run_945502`](https://coasty.ai/v1/runs/coasty_run_945502) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\FL_sunbiz_horizon_technologies_inc_cert.pdf) |
+| **Acme Innovation Labs LLC** | `DE` | `7348912` | [`coasty_run_299737`](https://coasty.ai/v1/runs/coasty_run_299737) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\DE_acme_innovation_labs_llc_cert.pdf) |
+| **Apex Quantum Dynamics Inc** | `CA` | `C4829103` | [`coasty_run_100227`](https://coasty.ai/v1/runs/coasty_run_100227) | FTB Suspended / Statement of Info Past Due | ⛔ FORFEITED | **$800.00** | N/A (Delinquent) |
+| **Empire Logistics Solutions Corp** | `NY` | `5920148` | [`coasty_run_651195`](https://coasty.ai/v1/runs/coasty_run_651195) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\NY_empire_logistics_solutions_corp_cert.pdf) |
+| **Lone Star Energy Systems LLC** | `TX` | `0803921841` | [`coasty_run_660871`](https://coasty.ai/v1/runs/coasty_run_660871) | Not in Good Standing / Franchise Tax Balance Due | 🔴 DELINQUENT | **$150.00** | N/A (Delinquent) |
+| **Sunbiz Horizon Technologies Inc** | `FL` | `P21000049281` | [`coasty_run_323951`](https://coasty.ai/v1/runs/coasty_run_323951) | Active / In Good Standing | 🟢 GOOD STANDING | $0.00 | [📄 Download PDF](C:\Users\PC\Desktop\CSCOUT\reports\artifacts\FL_sunbiz_horizon_technologies_inc_cert.pdf) |
 
 ---
 
 ## ⚡ Computer-Use Telemetry Verification
 
 > [!NOTE]
-> All compliance verifications were autonomous browser driver sessions executed via Coasty's official REST API endpoints (`https://coasty.ai/v1/tasks` and `https://coasty.ai/v1/runs/{id}`).
+> All compliance verifications were autonomous browser driver sessions executed via Coasty's official REST API endpoints (`https://coasty.ai/v1/runs` and `https://coasty.ai/v1/runs/{id}`).
 > Click any Coasty Verifiable Run URL above to inspect step logs, screenshot artifacts, and run telemetry directly on coasty.ai.
 
 ---

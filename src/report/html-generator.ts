@@ -38,7 +38,7 @@ export function generateHtmlReport(report: BatchSummaryReport): string {
         </div>
         <div>
           <h1 class="text-lg font-bold tracking-tight text-white">COMPLIANCESCOUT</h1>
-          <p class="text-xs text-slate-400 font-mono">Official Coasty REST API (coasty.ai) • AgentRouter (agentrouter.org)</p>
+          <p class="text-xs text-slate-400 font-mono">Official Coasty REST API (coasty.ai) • Native TypeScript Status Parser</p>
         </div>
       </div>
       <span class="px-3 py-1 text-xs font-mono rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">

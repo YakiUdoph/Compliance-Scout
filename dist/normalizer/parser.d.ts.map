@@ -1,0 +1,1 @@
+{"version":3,"file":"parser.d.ts","sourceRoot":"","sources":["../../src/normalizer/parser.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,mBAAmB;IAClC,MAAM,EAAE,eAAe,GAAG,YAAY,GAAG,WAAW,GAAG,SAAS,CAAC;IACjE,UAAU,EAAE,MAAM,GAAG,IAAI,CAAC;IAC1B,WAAW,EAAE,MAAM,CAAC;CACrB;AAED;;;GAGG;AACH,wBAAgB,iBAAiB,CAAC,OAAO,EAAE,MAAM,GAAG,mBAAmB,CAwDtE"}

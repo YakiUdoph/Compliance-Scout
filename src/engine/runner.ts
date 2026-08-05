@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { BusinessInput, ComplianceResult, BatchSummaryReport } from '../normalizer/schema.js';
 import { CoastyWorkflowEvaluator, EvaluatorOptions } from './evaluator.js';
-import { AgentRouterNormalizer, AgentRouterConfig } from '../normalizer/agent-router.js';
+import { parseEntityStatus } from '../normalizer/parser.js';
 
 const stateConfigsPath = path.resolve(process.cwd(), 'config', 'states.json');
 const STATE_CONFIGS = fs.existsSync(stateConfigsPath)
@@ -13,25 +13,23 @@ const STATE_CONFIGS = fs.existsSync(stateConfigsPath)
 export interface BatchRunnerOptions {
   concurrency?: number;
   evaluatorOptions?: EvaluatorOptions;
-  agentRouterConfig?: AgentRouterConfig;
   onProgressUpdate?: (result: ComplianceResult, index: number, total: number) => void;
 }
 
 export class BatchComplianceRunner {
   private concurrency: number;
   private evaluator: CoastyWorkflowEvaluator;
-  private normalizer: AgentRouterNormalizer;
   private onProgressUpdate?: (result: ComplianceResult, index: number, total: number) => void;
 
   constructor(options: BatchRunnerOptions = {}) {
     this.concurrency = options.concurrency || Number(process.env.CONCURRENCY_LIMIT) || 3;
     this.evaluator = new CoastyWorkflowEvaluator(options.evaluatorOptions);
-    this.normalizer = new AgentRouterNormalizer(options.agentRouterConfig);
     this.onProgressUpdate = options.onProgressUpdate;
   }
 
   /**
-   * Executes compliance checks across a batch of businesses concurrently
+   * Executes compliance checks across a batch of businesses concurrently using Coasty API
+   * and local native TypeScript parsing.
    */
   async runBatch(businesses: BusinessInput[]): Promise<BatchSummaryReport> {
     const startTime = Date.now();
@@ -45,11 +43,9 @@ export class BatchComplianceRunner {
         const stateCode = business.state.toUpperCase();
         const stateMeta = (STATE_CONFIGS as Record<string, any>)[stateCode] || { agency: `${stateCode} Secretary of State` };
 
-        // Normalize raw status via AgentRouter HTTP endpoint (agentrouter.org)
-        const normalized = await this.normalizer.normalizeStatus(
-          evalOutput.rawStatusText,
-          stateCode,
-          evalOutput.rawAmountOwedText
+        // Zero-dependency local native TypeScript status parsing
+        const normalized = parseEntityStatus(
+          evalOutput.rawStatusText + (evalOutput.rawAmountOwedText ? ` Fees Owed: ${evalOutput.rawAmountOwedText}` : '')
         );
 
         const complianceResult: ComplianceResult = {
@@ -62,7 +58,7 @@ export class BatchComplianceRunner {
           entityNumber: business.entity_number,
           rawStatus: evalOutput.rawStatusText,
           normalizedStatus: normalized.status,
-          amountOwed: normalized.amountOwed,
+          amountOwed: normalized.amountOwed || evalOutput.rawAmountOwedText,
           summaryNote: normalized.summaryNote,
           screenshotPath: evalOutput.screenshotPath,
           certPdfPath: evalOutput.certPdfPath,

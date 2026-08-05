@@ -28,7 +28,8 @@ export declare const NormalizationOutputSchema: z.ZodObject<{
     summaryNote: string;
     amountOwed?: string | null | undefined;
 }>;
-export type NormalizationOutput = z.infer<typeof NormalizationOutputSchema>;
+import { NormalizationOutput } from './parser.js';
+export type { NormalizationOutput };
 export interface ExecutionStepLog {
     stepNumber: number;
     action: string;

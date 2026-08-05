@@ -23,7 +23,8 @@ export const NormalizationOutputSchema = z.object({
   summaryNote: z.string()
 });
 
-export type NormalizationOutput = z.infer<typeof NormalizationOutputSchema>;
+import { NormalizationOutput } from './parser.js';
+export type { NormalizationOutput };
 
 export interface ExecutionStepLog {
   stepNumber: number;

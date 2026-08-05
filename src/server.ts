@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files from web/
+// Serve static frontend files from web/ when running locally
 const webDir = path.resolve(process.cwd(), 'web');
 if (fs.existsSync(webDir)) {
   app.use(express.static(webDir));
@@ -30,14 +30,16 @@ let currentAuditLogs: Array<{ taskId: string; message: string; timestamp: string
 /**
  * GET /api/status — Backend status & active Coasty Task run telemetry
  */
-app.get('/api/status', (req, res) => {
+app.get('/api/status', (req: Request, res: Response) => {
   res.json({
     status: isAuditRunning ? 'RUNNING' : 'IDLE',
     port: PORT,
     coastyEngine: 'REST API https://coasty.ai/v1',
-    agentRouterNormalizer: 'https://agentrouter.org/v1',
-    hasCoastyKey: Boolean(process.env.SK_COASTY_KEY && !process.env.SK_COASTY_KEY.includes('example')),
-    hasAgentRouterKey: Boolean(process.env.AGENTROUTER_API_KEY && !process.env.AGENTROUTER_API_KEY.includes('example')),
+    normalizer: 'Native TypeScript JSON & Regex Parser',
+    hasCoastyKey: Boolean(
+      (process.env.COASTY_API_KEY && !process.env.COASTY_API_KEY.includes('example')) ||
+      (process.env.SK_COASTY_KEY && !process.env.SK_COASTY_KEY.includes('example'))
+    ),
     activeTaskCount: isAuditRunning ? 3 : 0,
     recentLogs: currentAuditLogs,
     lastSummary: lastBatchSummary
@@ -47,7 +49,7 @@ app.get('/api/status', (req, res) => {
 /**
  * POST /api/audit — Triggers entity audit orchestrator server-side
  */
-app.post('/api/audit', async (req, res) => {
+app.post('/api/audit', async (req: Request, res: Response) => {
   try {
     let businesses: BusinessInput[] = [];
 
@@ -125,10 +127,15 @@ app.post('/api/audit', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`
-\x1b[32m  🛡️ COMPLIANCESCOUT Backend Server Running on http://localhost:${PORT}\x1b[0m
+// If executing directly (not imported as serverless function handler)
+if (process.env.NODE_ENV !== 'production' || process.argv[1]?.endsWith('server.js') || process.argv[1]?.endsWith('server.ts')) {
+  app.listen(PORT, () => {
+    console.log(`
+\x1b[32m  🛡️ COMPLIANCESCOUT Server Running on http://localhost:${PORT}\x1b[0m
 \x1b[90m  API Endpoints: POST /api/audit | GET /api/status\x1b[0m
-\x1b[90m  Coasty Target: https://coasty.ai/v1 | AgentRouter Target: https://agentrouter.org/v1\x1b[0m
+\x1b[90m  Coasty Target: https://coasty.ai/v1 | Normalizer: Native TypeScript Parser\x1b[0m
 `);
-});
+  });
+}
+
+export default app;
