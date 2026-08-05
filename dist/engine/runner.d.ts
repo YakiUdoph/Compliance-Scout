@@ -11,9 +11,13 @@ export declare class BatchComplianceRunner {
     private onProgressUpdate?;
     constructor(options?: BatchRunnerOptions);
     /**
+     * Asynchronously executes entity audits for a job, updating job-store.ts incrementally.
+     */
+    runJobAsync(jobId: string, businesses: BusinessInput[]): Promise<BatchSummaryReport>;
+    /**
      * Executes compliance checks across a batch of businesses concurrently using Coasty API
      * and local native TypeScript parsing.
      */
-    runBatch(businesses: BusinessInput[]): Promise<BatchSummaryReport>;
+    runBatch(businesses: BusinessInput[], onProgress?: (result: ComplianceResult, index: number, total: number) => void): Promise<BatchSummaryReport>;
 }
 //# sourceMappingURL=runner.d.ts.map

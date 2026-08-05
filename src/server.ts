@@ -5,8 +5,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import { BusinessInput, BusinessInputSchema } from './normalizer/schema.js';
 import { BatchComplianceRunner } from './engine/runner.js';
-import { generateMarkdownReport } from './report/markdown-generator.js';
-import { generateHtmlReport } from './report/html-generator.js';
+import { createJob, getJob, getAllJobs } from './engine/job-store.js';
 
 dotenv.config();
 
@@ -23,31 +22,51 @@ if (fs.existsSync(webDir)) {
   app.use(express.static(webDir));
 }
 
-let lastBatchSummary: any = null;
-let isAuditRunning = false;
-let currentAuditLogs: Array<{ taskId: string; message: string; timestamp: string }> = [];
+const runner = new BatchComplianceRunner({ concurrency: 3 });
 
 /**
- * GET /api/status — Backend status & active Coasty Task run telemetry
+ * GET /api/status/:job_id or GET /api/status — Instant job state lookup
  */
-app.get('/api/status', (req: Request, res: Response) => {
-  res.json({
-    status: isAuditRunning ? 'RUNNING' : 'IDLE',
+app.get(['/api/status', '/api/status/:job_id'], (req: Request, res: Response) => {
+  const jobId = req.params.job_id || (req.query.job_id as string);
+
+  if (jobId) {
+    const job = getJob(jobId);
+    if (!job) {
+      return res.status(404).json({ error: `Job with ID '${jobId}' not found.` });
+    }
+    return res.json({
+      job_id: job.jobId,
+      status: job.status,
+      total_count: job.totalCount,
+      completed_count: job.completedCount,
+      results: job.results,
+      summary: job.summary,
+      active_logs: job.activeLogs,
+      error: job.error,
+      updated_at: job.updatedAt
+    });
+  }
+
+  // If no job_id specified, return all registered jobs & system state
+  const jobs = getAllJobs();
+  return res.json({
+    status: 'OPERATIONAL',
     port: PORT,
     coastyEngine: 'REST API https://coasty.ai/v1',
     normalizer: 'Native TypeScript JSON & Regex Parser',
-    hasCoastyKey: Boolean(
-      (process.env.COASTY_API_KEY && !process.env.COASTY_API_KEY.includes('example')) ||
-      (process.env.SK_COASTY_KEY && !process.env.SK_COASTY_KEY.includes('example'))
-    ),
-    activeTaskCount: isAuditRunning ? 3 : 0,
-    recentLogs: currentAuditLogs,
-    lastSummary: lastBatchSummary
+    total_jobs_registered: jobs.length,
+    recent_jobs: jobs.slice(0, 5).map(j => ({
+      job_id: j.jobId,
+      status: j.status,
+      progress: `${j.completedCount}/${j.totalCount}`,
+      created_at: j.createdAt
+    }))
   });
 });
 
 /**
- * POST /api/audit — Triggers entity audit orchestrator server-side
+ * POST /api/audit — Non-blocking job producer controller (Returns instant HTTP 202 Accepted)
  */
 app.post('/api/audit', async (req: Request, res: Response) => {
   try {
@@ -90,39 +109,24 @@ app.post('/api/audit', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'No valid business entity records found in request.' });
     }
 
-    isAuditRunning = true;
-    currentAuditLogs = [];
+    // 1. Create job in in-memory registry
+    const job = createJob(businesses);
 
-    const runner = new BatchComplianceRunner({
-      concurrency: 3,
-      onProgressUpdate: (result, current, total) => {
-        currentAuditLogs.unshift({
-          taskId: result.taskId,
-          message: `[${current}/${total}] Audited ${result.businessName} (${result.state}): ${result.normalizedStatus} - Run URL: ${result.runUrl}`,
-          timestamp: new Date().toLocaleTimeString()
-        });
-      }
+    // 2. Dispatch background orchestrator thread (NON-BLOCKING DETACHED PROMISE)
+    runner.runJobAsync(job.jobId, businesses).catch(err => {
+      console.error(`[Background Job Error] Job ${job.jobId} failed:`, err);
     });
 
-    const report = await runner.runBatch(businesses);
-
-    // Save report artifacts
-    const reportsDir = path.resolve(process.cwd(), 'reports');
-    if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
-
-    fs.writeFileSync(path.join(reportsDir, 'COMPLIANCE_REPORT.md'), generateMarkdownReport(report), 'utf-8');
-    fs.writeFileSync(path.join(reportsDir, 'dashboard.html'), generateHtmlReport(report), 'utf-8');
-
-    lastBatchSummary = report;
-    isAuditRunning = false;
-
-    return res.json({
-      success: true,
-      report
+    // 3. IMMEDIATELY return HTTP 202 Accepted (< 200ms) with poll URL
+    return res.status(202).json({
+      job_id: job.jobId,
+      status: job.status,
+      total_count: job.totalCount,
+      poll_url: `/api/status/${job.jobId}`,
+      message: 'Job accepted and queued for background Coasty browser execution.'
     });
   } catch (error) {
-    isAuditRunning = false;
-    console.error(`[Backend API Audit Error]`, error);
+    console.error(`[Backend API Audit Dispatch Error]`, error);
     return res.status(500).json({ error: (error as Error).message });
   }
 });
@@ -132,8 +136,8 @@ if (process.env.NODE_ENV !== 'production' || process.argv[1]?.endsWith('server.j
   app.listen(PORT, () => {
     console.log(`
 \x1b[32m  🛡️ COMPLIANCESCOUT Server Running on http://localhost:${PORT}\x1b[0m
-\x1b[90m  API Endpoints: POST /api/audit | GET /api/status\x1b[0m
-\x1b[90m  Coasty Target: https://coasty.ai/v1 | Normalizer: Native TypeScript Parser\x1b[0m
+\x1b[90m  API Endpoints: POST /api/audit (HTTP 202) | GET /api/status/:job_id\x1b[0m
+\x1b[90m  Mode: Asynchronous Non-Blocking Job Queue (Vercel Timeout Safe)\x1b[0m
 `);
   });
 }

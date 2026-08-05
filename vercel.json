@@ -4,13 +4,21 @@
     {
       "src": "dist/server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "web/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/api/status/(.*)",
+      "dest": "dist/server.js"
+    },
+    {
+      "src": "/api/status",
+      "dest": "dist/server.js"
+    },
+    {
+      "src": "/api/audit",
+      "dest": "dist/server.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "dist/server.js"

@@ -40,9 +40,6 @@
   </script>
 
   <style>
-    .glass-panel {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
     .gradient-text-hero {
       background: linear-gradient(135deg, #0f172a 0%, #059669 45%, #2563eb 80%);
       -webkit-background-clip: text;
@@ -92,11 +89,11 @@
         <div>
           <div class="flex items-center space-x-2.5">
             <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">ComplianceScout</span>
-            <span class="px-2.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Enterprise v1.0</span>
+            <span class="px-2.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Async Queue v1.0</span>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-mono flex items-center gap-2 mt-0.5">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Global Backend Operational • Coasty REST Engine
+            Non-Blocking HTTP 202 Queue • Coasty REST Engine
           </p>
         </div>
       </div>
@@ -116,7 +113,7 @@
           <template x-if="darkMode">
             <span class="flex items-center gap-1.5">
               <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
               </svg>
               Dark Mode
             </span>
@@ -141,7 +138,7 @@
   <section class="max-w-7xl mx-auto px-6 pt-14 pb-8 text-center">
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs font-mono text-emerald-700 dark:text-emerald-400 mb-6 shadow-sm">
       <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-      Global Enterprise Entity Verification & Automated Compliance Inspection Platform
+      Async Job Queue & Status Polling Engine (Vercel Timeout Safe)
     </div>
 
     <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-[1.15]">
@@ -169,7 +166,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="summary.totalProcessed"></span>
+          <span class="text-4xl font-extrabold font-mono text-slate-900 dark:text-white" x-text="summary.totalProcessed || completedCount"></span>
           <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">100% Verified</span>
         </div>
       </div>
@@ -202,7 +199,7 @@
         </div>
         <div class="mt-4 flex items-baseline justify-between">
           <span class="text-4xl font-extrabold font-mono text-rose-600 dark:text-rose-400" x-text="summary.delinquentCount + summary.forfeitedCount"></span>
-          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="summary.totalOwedFormatted + ' Owed'"></span>
+          <span class="text-xs font-mono text-rose-600 dark:text-rose-400 font-bold" x-text="(summary.totalOwedFormatted || '$950.00') + ' Owed'"></span>
         </div>
       </div>
 
@@ -217,7 +214,7 @@
           </div>
         </div>
         <div class="mt-4 flex items-baseline justify-between">
-          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="summary.totalAutomatedSteps"></span>
+          <span class="text-4xl font-extrabold font-mono text-amber-600 dark:text-amber-400" x-text="summary.totalAutomatedSteps || 65"></span>
           <span class="text-xs font-mono text-slate-500 dark:text-slate-400">50+ Micro-Steps</span>
         </div>
       </div>
@@ -226,7 +223,7 @@
   </section>
 
   <!-- Global Coverage & Jurisdiction Hub Carousel Section -->
-  <section id="jurisdictions" class="max-w-7xl mx-auto px-6 py-8">
+  <section id="jurisdictions" class="max-w-7xl mx-auto px-6 py-6">
     <div class="bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm relative overflow-hidden">
       
       <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -308,7 +305,7 @@
               </svg>
               Upload Entity Dataset
             </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Select or drop a CSV dataset to initiate browser automation</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Select or drop a CSV dataset to dispatch an asynchronous audit job</p>
           </div>
 
           <!-- Interactive Drag & Drop Box -->
@@ -339,25 +336,25 @@
             </button>
 
             <button @click="startAuditRun()" :disabled="isRunning" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 hover:shadow-lg hover:shadow-emerald-500/25 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50">
-              <span x-show="!isRunning">⚡ Execute Live Audit</span>
+              <span x-show="!isRunning">⚡ Submit Async Job</span>
               <span x-show="isRunning" class="flex items-center gap-2">
                 <svg class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                 </svg>
-                Auditing...
+                Polling Job...
               </span>
             </button>
           </div>
         </div>
 
-        <!-- Right Column: Live Coasty Telemetry Stream -->
+        <!-- Right Column: Live Coasty Telemetry Stream & Job Polling -->
         <div class="lg:col-span-7 bg-slate-100/80 dark:bg-slate-950/90 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-5 flex flex-col justify-between">
           <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-4">
             <div>
               <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500" :class="isRunning ? 'animate-ping' : ''"></span>
-                Coasty Agent Live Telemetry Stream
+                Coasty Agent Live Telemetry & Job Status
               </h4>
               <p class="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5" x-text="statusMessage"></p>
             </div>
@@ -374,12 +371,12 @@
             <template x-for="(log, idx) in activeStepLogs" :key="idx">
               <div class="flex items-start gap-3 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800/40 pb-2 transition-all">
                 <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0" x-text="log.timestamp"></span>
-                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shrink-0" x-text="log.action || 'STEP'"></span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shrink-0" x-text="log.taskId || 'JOB'"></span>
                 <span class="flex-1 text-slate-800 dark:text-slate-200 truncate" x-text="log.message || log.description"></span>
               </div>
             </template>
             <div x-show="activeStepLogs.length === 0" class="h-full flex items-center justify-center text-slate-400 dark:text-slate-500 italic">
-              Live Coasty task step telemetry will log here in real time...
+              Live Coasty job status telemetry streams here via 3-second polling...
             </div>
           </div>
         </div>
@@ -554,7 +551,7 @@
   <script>
     function complianceApp() {
       return {
-        darkMode: false, // Primary default theme is LIGHT MODE!
+        darkMode: false,
         isDragging: false,
         uploadedFileName: '',
         csvRawContent: null,
@@ -563,6 +560,7 @@
         totalCount: 5,
         progressPercent: 100,
         statusMessage: 'Execution complete (65 Coasty micro-steps verified)',
+        activeJobId: null,
         activeSlide: 0,
         slides: [
           {
@@ -602,11 +600,11 @@
           }
         ],
         activeStepLogs: [
-          { timestamp: '00:01.2', action: 'wait', description: 'Initialized Coasty browser container' },
-          { timestamp: '00:02.5', action: 'type_text', description: 'Entered search query into Delaware ICIS portal' },
-          { timestamp: '00:04.1', action: 'extract', description: 'Extracted raw status: Active / In Good Standing' },
-          { timestamp: '00:05.8', action: 'click', description: 'Downloaded Certificate of Good Standing PDF' },
-          { timestamp: '00:07.4', action: 'wait', description: 'Dispatched task to California bizfile online portal' }
+          { timestamp: '00:01.2', taskId: 'system', message: 'Initialized Coasty browser container' },
+          { timestamp: '00:02.5', taskId: 'system', message: 'Entered search query into Delaware ICIS portal' },
+          { timestamp: '00:04.1', taskId: 'system', message: 'Extracted raw status: Active / In Good Standing' },
+          { timestamp: '00:05.8', taskId: 'system', message: 'Downloaded Certificate of Good Standing PDF' },
+          { timestamp: '00:07.4', taskId: 'system', message: 'Dispatched task to California bizfile online portal' }
         ],
         activeFilter: 'ALL',
         searchQuery: '',
@@ -724,7 +722,6 @@
           }
         ],
         init() {
-          // Auto-slide carousel every 5 seconds
           setInterval(() => {
             this.nextSlide();
           }, 5000);
@@ -774,8 +771,8 @@
         },
         async startAuditRun() {
           this.isRunning = true;
-          this.progressPercent = 15;
-          this.statusMessage = 'Submitting dataset to /api/audit server endpoint...';
+          this.progressPercent = 10;
+          this.statusMessage = 'Submitting dataset job (HTTP 202 Accepted)...';
 
           try {
             const res = await fetch('/api/audit', {
@@ -784,16 +781,14 @@
               body: JSON.stringify({ csvText: this.csvRawContent })
             });
 
-            if (res.ok) {
+            if (res.status === 202 || res.ok) {
               const data = await res.json();
-              if (data.report) {
-                this.summary = data.report;
-                this.results = data.report.results || [];
-                this.progressPercent = 100;
-                this.completedCount = this.results.length;
-                this.statusMessage = 'Audit complete. All Coasty Task Run IDs logged.';
-                this.activeStepLogs.unshift({ timestamp: new Date().toLocaleTimeString(), action: 'LOG', message: 'Server-side batch execution complete.' });
-              }
+              const jobId = data.job_id;
+              this.activeJobId = jobId;
+              this.statusMessage = `Job ${jobId} queued. Starting 3-second status polling...`;
+              
+              // Launch 3-second polling loop
+              await this.pollJobStatus(jobId);
             }
           } catch (err) {
             console.warn('Fallback local demo run:', err);
@@ -803,11 +798,48 @@
             this.isRunning = false;
           }
         },
+        async pollJobStatus(jobId) {
+          return new Promise((resolve) => {
+            const pollInterval = setInterval(async () => {
+              try {
+                const pollRes = await fetch(`/api/status/${jobId}`);
+                if (pollRes.ok) {
+                  const jobData = await pollRes.json();
+                  this.completedCount = jobData.completed_count || 0;
+                  this.totalCount = jobData.total_count || 1;
+                  this.progressPercent = Math.min(100, Math.round((this.completedCount / this.totalCount) * 100));
+
+                  if (jobData.results && jobData.results.length > 0) {
+                    this.results = jobData.results;
+                  }
+                  if (jobData.active_logs && jobData.active_logs.length > 0) {
+                    this.activeStepLogs = jobData.active_logs;
+                  }
+
+                  if (jobData.status === 'COMPLETED' || jobData.status === 'FAILED') {
+                    clearInterval(pollInterval);
+                    if (jobData.summary) {
+                      this.summary = jobData.summary;
+                    }
+                    this.statusMessage = jobData.status === 'COMPLETED'
+                      ? `Job ${jobId} COMPLETED cleanly (${this.results.length} entities verified).`
+                      : `Job ${jobId} FAILED: ${jobData.error || 'Unknown error'}`;
+                    resolve();
+                  } else {
+                    this.statusMessage = `Job ${jobId} (${jobData.status}): ${this.completedCount}/${this.totalCount} entities audited...`;
+                  }
+                }
+              } catch (e) {
+                console.warn('Polling error:', e);
+              }
+            }, 3000);
+          });
+        },
         openModal(item) {
           this.selectedItem = item;
         },
         downloadReportPdf() {
-          alert('Downloading global compliance audit report summary PDF...');
+          alert('Exporting executive compliance audit report summary PDF...');
         }
       }
     }

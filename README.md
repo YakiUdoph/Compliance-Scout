@@ -2,64 +2,56 @@
 
 # 🛡️ COMPLIANCESCOUT
 
-**Autonomous Secretary of State Compliance Engine Powered by Official Coasty REST API & Native TypeScript Parser.**
+**Global Enterprise Entity Verification & Automated Compliance Inspection Platform**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20.0.0-339933.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6.svg)](https://www.typescriptlang.org/)
 [![Coasty REST API](https://img.shields.io/badge/Coasty%20API-coasty.ai-10B981.svg)](https://coasty.ai)
-[![Parser](https://img.shields.io/badge/Normalizer-Native%20TypeScript-6366F1.svg)](#local-native-parser-srcnormalizerparserts)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel%20Serverless-000000.svg)](#vercel-deployment-verceljson)
-[![Contest](https://img.shields.io/badge/Coasty%20Hackathon-$500%20Contest-FFD700.svg)](#hackathon--contest-submission)
+[![Architecture](https://img.shields.io/badge/Pattern-Async%20Job%20Queue-6366F1.svg)](#asynchronous-job-queue--polling-pattern)
+[![Vercel Safe](https://img.shields.io/badge/Vercel-HTTP%20202%20Safe-000000.svg)](#vercel-deployment-verceljson)
 
-[Live Web Dashboard](web/index.html) • [Quickstart Guide](#quickstart) • [Integration Test](#verification-test-suite) • [Add a 6th State](#how-to-add-a-6th-state-in-1-file)
+[Live Dashboard](web/index.html) • [Quickstart Guide](#quickstart) • [Integration Test](#verification-test-suite)
 
 ---
 
 </div>
 
-## 📌 Executive Summary & Value Proposition
+## 📌 Executive Summary & Architecture
 
-Corporate entity compliance across US states is severely broken due to a lack of government APIs. Checking entity standing, franchise tax delinquencies, or administrative revocations requires manually driving state web portals.
+Corporate entity compliance across Secretary of State databases & global commercial registries suffers from lack of standardized APIs. **ComplianceScout** delivers autonomous, enterprise-grade inspection without hitting HTTP timeouts:
 
-**COMPLIANCESCOUT solves this problem with enterprise-grade architecture:**
-
-1. **Official Coasty REST API Integration (`coasty.ai`)**: Submits browser tasks to `POST https://coasty.ai/v1/runs` and polls `GET https://coasty.ai/v1/runs/{id}`. Every audit result attaches a verifiable **Coasty Task Run URL** (`https://coasty.ai/v1/runs/{runId}`).
-2. **Zero-Dependency Native Status Parser (`src/normalizer/parser.ts`)**: Fast, local TypeScript parser extracting structured JSON blocks and regex legal keyword tags (`GOOD_STANDING`, `DELINQUENT`, `FORFEITED`, `UNKNOWN`). Zero external LLM dependencies.
-3. **Local Express Proxy & Vercel Serverless Ready (`vercel.json`)**: Runs locally on `http://localhost:3000` or deploys seamlessly to Vercel serverless functions. API keys (`COASTY_API_KEY`) stay 100% server-side.
+1. **Asynchronous Job Queue & Polling Pattern**: `POST /api/audit` acts as a thin producer controller, returning an instant **`HTTP 202 Accepted`** with a `job_id` (< 200ms). Background Coasty browser tasks execute asynchronously while the client polls `GET /api/status/:job_id` every 3 seconds to stream live status updates. This completely eliminates Vercel `504 Gateway Timeouts`.
+2. **Official Coasty REST API (`coasty.ai`)**: Dispatches computer-use tasks to `POST https://coasty.ai/v1/runs` and polls `GET https://coasty.ai/v1/runs/{id}`. Every audit result attaches a verifiable **Coasty Task Run URL** (`https://coasty.ai/v1/runs/{runId}`).
+3. **Zero-Dependency Native Status Parser (`src/normalizer/parser.ts`)**: Local TypeScript parser extracting structured JSON blocks and regex legal keyword tags (`GOOD_STANDING`, `DELINQUENT`, `FORFEITED`, `UNKNOWN`). Zero external LLM dependencies.
 
 ---
 
-## 🏛️ System Architecture Diagram
+## 🏛️ Asynchronous Job Queue Sequence Diagram
 
 ```
   Client Web UI (web/index.html)
         │
-        │ HTTP Requests (NO API KEYS EXPOSED)
-        ▼
-  Express Backend Server / Vercel Serverless (http://localhost:3000/api/*)
-        │ Reads COASTY_API_KEY from process environment
-        │
-        ├───────────────────────────────────────┐
-        ▼                                       ▼
-  Coasty REST API                         Native TypeScript Parser
-  POST https://coasty.ai/v1/runs          src/normalizer/parser.ts
-  GET  https://coasty.ai/v1/runs/{id}     (JSON Regex & Keyword Normalization)
-        │                                       │
-        └───────────────────┬───────────────────┘
-                            │
-                            ▼
-               Verifiable Compliance Audit Output:
-               - Coasty Task Run URL: https://coasty.ai/v1/runs/{runId}
-               - COMPLIANCE_REPORT.md
-               - dashboard.html
+        ├── 1. POST /api/audit (Returns HTTP 202 Accepted + job_id in < 200ms) ──┐
+        │                                                                        │
+        ├── 2. Polls GET /api/status/:job_id every 3 seconds ────────────────┐   │
+        │                                                                    │   │
+        ▼                                                                    ▼   ▼
+  Express / Vercel Controller (src/server.ts) ──────────────────────► In-Memory Job Store
+        │ (Non-blocking background thread)                           (src/engine/job-store.ts)
+        │                                                                    ▲
+        ▼                                                                    │
+  Async Batch Orchestrator (src/engine/runner.ts)                           │
+        │                                                                    │
+        ├── Executes Coasty Browser Tasks (POST /v1/runs) ──────────────────┤
+        └── Incrementally updates job status & entity results ───────────────┘
 ```
 
 ---
 
 ## ⚡ Verifiable Audit Telemetry & Task Run URLs
 
-Every entity audited by COMPLIANCESCOUT receives a unique Coasty Task Run ID and verifiable URL logged directly into audit reports:
+Every entity audited by ComplianceScout receives a unique Coasty Task Run ID and verifiable URL logged directly into audit reports:
 
 | Entity Name | State | Coasty Task Run URL | Status Tag | Fees Owed | Artifact Download |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -74,16 +66,10 @@ Every entity audited by COMPLIANCESCOUT receives a unique Coasty Task Run ID and
 ### 1. Installation & Environment Setup
 
 ```bash
-git clone https://github.com/your-org/compliancescout.git
-cd compliancescout
+git clone https://github.com/YakiUdoph/Compliance-Scout.git
+cd Compliance-Scout
 npm install
 cp .env.example .env
-```
-
-Edit `.env`:
-```env
-COASTY_API_KEY=sk_coasty_your_live_key
-PORT=3000
 ```
 
 ### 2. Build & Launch Backend Server
@@ -109,41 +95,3 @@ npm run test:coasty
 ```bash
 npx vercel
 ```
-
----
-
-## 🧩 How to Add a 6th State in 1 File
-
-To add support for a 6th state jurisdiction (e.g., **Georgia - GA**), update `src/engine/state-workflows.ts`:
-
-```typescript
-// src/engine/state-workflows.ts
-
-export const STATE_PROMPTS: Record<string, StateWorkflowConfig> = {
-  // Existing state workflows...
-
-  GA: {
-    stateCode: 'GA',
-    stateName: 'Georgia',
-    agencyName: 'Georgia Secretary of State',
-    portalUrl: 'https://ecorp.sos.ga.gov/BusinessSearch',
-    maxSteps: 15,
-    promptTemplate: `Navigate to Georgia Secretary of State Business Search at https://ecorp.sos.ga.gov/BusinessSearch.
-1. Input "{BUSINESS_NAME}" into the search field and submit query.
-2. Click target matching entity.
-3. Read raw standing status, screenshot page, and download Certificate of Existence or log annual report balance owed.
-
-Output ONLY a raw JSON block at the end:
-{ "status": "GOOD_STANDING"|"DELINQUENT"|"FORFEITED", "amountOwed": "$XX.XX"|null, "summaryNote": "..." }`
-  }
-};
-```
-
----
-
-## 🏷️ Hackathon & Contest Submission
-
-Created for **Coasty's $500 Computer-Use Contest** (`@coastyai`):
-- **Coasty Target Host**: `https://coasty.ai/v1`
-- **Zero External LLMs**: Native TypeScript parsing in `src/normalizer/parser.ts`.
-- **Security**: Key separation via local Express proxy server and Vercel serverless deployment (`vercel.json`).
