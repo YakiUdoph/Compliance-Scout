@@ -1,0 +1,7 @@
+{
+  "name": "@coasty-ai/open-cowork",
+  "version": "1.0.0",
+  "description": "Coasty Computer-Use Core Engine & Workflow DSL Evaluator",
+  "main": "index.js",
+  "type": "module"
+}

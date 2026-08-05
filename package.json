@@ -1,0 +1,46 @@
+{
+  "name": "compliancescout",
+  "version": "1.0.0",
+  "description": "Autonomous Secretary of State compliance engine powered by Coasty computer-use agents and AgentRouter LLM status normalization.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "compliancescout": "./bin/compliancescout.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/cli/index.ts",
+    "server": "tsx src/server.ts",
+    "test:coasty": "tsx tests/verify-coasty.test.ts",
+    "web": "npx http-server web -p 3000 -c-1"
+  },
+  "keywords": [
+    "coasty",
+    "agentrouter",
+    "compliance",
+    "secretary-of-state",
+    "computer-use",
+    "llm",
+    "legaltech",
+    "automation"
+  ],
+  "author": "COMPLIANCESCOUT Contributors",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "p-limit": "^6.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.2"
+  }
+}

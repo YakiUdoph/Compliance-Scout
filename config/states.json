@@ -1,0 +1,92 @@
+{
+  "DE": {
+    "stateCode": "DE",
+    "stateName": "Delaware",
+    "agency": "Delaware Division of Corporations",
+    "searchUrl": "https://icis.corp.delaware.gov/Ecorp/EntitySearch/NameSearch.aspx",
+    "filingUrl": "https://icis.corp.delaware.gov/Ecorp/TaxPay/TaxPayWelcome.aspx",
+    "certUrl": "https://icis.corp.delaware.gov/Ecorp/Certificates/GoodStanding.aspx",
+    "selectors": {
+      "searchInput": "#ctl00_ContentPlaceHolder1_txtEntityName",
+      "searchSubmit": "#ctl00_ContentPlaceHolder1_btnSubmit",
+      "entityLink": "#ctl00_ContentPlaceHolder1_gvResults table tr.data-row a",
+      "statusBadge": ".entity-status-value, #ctl00_ContentPlaceHolder1_lblStatus",
+      "taxOwedText": "#ctl00_ContentPlaceHolder1_lblTaxesOwed",
+      "certRequestBtn": "#ctl00_ContentPlaceHolder1_btnGenerateCert"
+    },
+    "delinquencyKeywords": ["Forfeited", "Revoked", "Taxes Due", "Past Due", "Delinquent", "Void"],
+    "annualReportFee": "$300.00"
+  },
+  "CA": {
+    "stateCode": "CA",
+    "stateName": "California",
+    "agency": "California Secretary of State (bizfileOnline)",
+    "searchUrl": "https://bizfileonline.sos.ca.gov/search/business",
+    "filingUrl": "https://bizfileonline.sos.ca.gov/filings/statementofinformation",
+    "certUrl": "https://bizfileonline.sos.ca.gov/certificates/order",
+    "selectors": {
+      "searchInput": "input[data-testid='business-search-input']",
+      "searchSubmit": "button[data-testid='search-button']",
+      "entityLink": ".search-results-table tbody tr:first-child td a",
+      "statusBadge": "[data-testid='entity-status-tag']",
+      "taxOwedText": ".amount-due-highlight",
+      "certRequestBtn": "button#request-certificate-pdf"
+    },
+    "delinquencyKeywords": ["FTB Suspended", "SOS Suspended", "Dissolved", "Canceled", "Past Due"],
+    "annualReportFee": "$800.00"
+  },
+  "NY": {
+    "stateCode": "NY",
+    "stateName": "New York",
+    "agency": "New York Department of State (Division of Corporations)",
+    "searchUrl": "https://apps.dos.ny.gov/publicInquiry/",
+    "filingUrl": "https://apps.dos.ny.gov/publicInquiry/biennialStatement",
+    "certUrl": "https://apps.dos.ny.gov/publicInquiry/certificateStatus",
+    "selectors": {
+      "searchInput": "#EntityName",
+      "searchSubmit": "#btnSearch",
+      "entityLink": "#gridResults tbody tr:first-child a",
+      "statusBadge": "#lblEntityStatus",
+      "taxOwedText": "#lblFeeAmountDue",
+      "certRequestBtn": "#btnDownloadCertificate"
+    },
+    "delinquencyKeywords": ["Inactive", "Past Due Date", "Dissolved by Proclamation", "Delinquent", "Revoked"],
+    "annualReportFee": "$9.00"
+  },
+  "TX": {
+    "stateCode": "TX",
+    "stateName": "Texas",
+    "agency": "Texas Comptroller of Public Accounts (Taxable Entity Search)",
+    "searchUrl": "https://mycpa.cpa.state.tx.us/coa/",
+    "filingUrl": "https://mycpa.cpa.state.tx.us/coa/franchiseTaxFiling",
+    "certUrl": "https://mycpa.cpa.state.tx.us/coa/certificateOfFact",
+    "selectors": {
+      "searchInput": "input#entityNameInput",
+      "searchSubmit": "input#btnSearchCoa",
+      "entityLink": "table#coaResults tr.resultRow a",
+      "statusBadge": "span.rightToTransactStatus",
+      "taxOwedText": "div.franchiseTaxBalance",
+      "certRequestBtn": "a.downloadFactCert"
+    },
+    "delinquencyKeywords": ["Franchise Tax Inactive", "Right to Transact Business Forfeited", "Forfeited", "Not in Good Standing"],
+    "annualReportFee": "$150.00"
+  },
+  "FL": {
+    "stateCode": "FL",
+    "stateName": "Florida",
+    "agency": "Florida Department of State (Sunbiz)",
+    "searchUrl": "https://search.sunbiz.org/Inquiry/CorporationSearch/ByName",
+    "filingUrl": "https://efile.sunbiz.org/file_annual_report.html",
+    "certUrl": "https://search.sunbiz.org/Inquiry/CorporationSearch/CertificateOfStatus",
+    "selectors": {
+      "searchInput": "#SearchTerm",
+      "searchSubmit": "form button[type='submit']",
+      "entityLink": ".search-results-container table tbody tr:first-child td a",
+      "statusBadge": ".detail-section .status-value",
+      "taxOwedText": ".annual-report-due-amount",
+      "certRequestBtn": "#btnCertStatusPDF"
+    },
+    "delinquencyKeywords": ["Admin Dissolved", "Inactive", "Annual Report Due", "Revoked", "Delinquent"],
+    "annualReportFee": "$138.75"
+  }
+}
