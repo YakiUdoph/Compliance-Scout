@@ -11,7 +11,7 @@ export type NormalizedStatus = z.infer<typeof NormalizedStatusEnum>;
 
 export const BusinessInputSchema = z.object({
   business_name: z.string().min(1, 'Business name is required'),
-  state: z.string().length(2, 'State code must be 2 characters (e.g., DE, CA)'),
+  state: z.string().min(1, 'State or jurisdiction is required'),
   entity_number: z.string().min(1, 'Entity number is required')
 });
 

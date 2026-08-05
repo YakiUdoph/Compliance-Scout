@@ -423,7 +423,7 @@
                   <svg class="w-10 h-10 mx-auto mb-3 text-slate-300 dark:text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                   </svg>
-                  No active audit results. Upload a dataset to begin.
+                  No file loaded. Drop a .csv or .txt dataset to run live audit.
                 </td>
               </tr>
             </template>
@@ -714,11 +714,16 @@
           this.startAuditRun();
         },
         async startAuditRun() {
+          if (!this.csvRawContent) {
+            alert('Please select or drop a .csv or .txt file first.');
+            return;
+          }
+
           this.isRunning = true;
           this.progressPercent = 15;
           this.statusMessage = 'Executing Secretary of State entity verification audit (200 OK)...';
 
-          // Clear previous results & reset counts on new upload start
+          // Wipe existing table contents on new upload start
           this.results = [];
           this.completedCount = 0;
           this.totalCount = 0;
@@ -733,132 +738,21 @@
             const data = await res.json();
             console.log('AUDIT RESPONSE:', data);
 
-            // Unified Data Extractor: handle any response payload format
-            let items = Array.isArray(data) ? data : (data.results || data.entities || data.jobs || []);
-
-            // Fallback to mock array of 5 sample audited entities if items is empty
-            if (!items || items.length === 0) {
-              console.warn('No items returned from backend. Using mock fallback entities for demo display.');
-              items = [
-                {
-                  id: 'CS-DE-7348912',
-                  taskId: 'coasty_run_734891',
-                  runUrl: 'https://coasty.ai/v1/runs/coasty_run_734891',
-                  coasty_run_url: 'https://coasty.ai/v1/runs/coasty_run_734891',
-                  businessName: 'Acme Innovation Labs LLC',
-                  business_name: 'Acme Innovation Labs LLC',
-                  state: 'DE',
-                  stateAgency: 'Delaware Division of Corporations',
-                  entityNumber: '7348912',
-                  rawStatus: 'Active / In Good Standing',
-                  normalizedStatus: 'GOOD_STANDING',
-                  status: 'GOOD_STANDING',
-                  amountOwed: null,
-                  delinquency_owed: '$0.00',
-                  stepCount: 13,
-                  executionSteps: [
-                    { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-                    { stepNumber: 2, action: 'type_text', description: 'Enter business name into Delaware portal' },
-                    { stepNumber: 3, action: 'click', description: 'Submit entity search form' }
-                  ]
-                },
-                {
-                  id: 'CS-CA-C4829103',
-                  taskId: 'coasty_run_482910',
-                  runUrl: 'https://coasty.ai/v1/runs/coasty_run_482910',
-                  coasty_run_url: 'https://coasty.ai/v1/runs/coasty_run_482910',
-                  businessName: 'Apex Quantum Dynamics Inc',
-                  business_name: 'Apex Quantum Dynamics Inc',
-                  state: 'CA',
-                  stateAgency: 'California Secretary of State (bizfileOnline)',
-                  entityNumber: 'C4829103',
-                  rawStatus: 'FTB Suspended / Statement of Info Past Due',
-                  normalizedStatus: 'DELINQUENT',
-                  status: 'DELINQUENT',
-                  amountOwed: '$800.00',
-                  delinquency_owed: '$800.00',
-                  stepCount: 13,
-                  executionSteps: [
-                    { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-                    { stepNumber: 2, action: 'extract', description: 'Read CA penalty & annual filing fees: $800.00' }
-                  ]
-                },
-                {
-                  id: 'CS-NY-5920148',
-                  taskId: 'coasty_run_592014',
-                  runUrl: 'https://coasty.ai/v1/runs/coasty_run_592014',
-                  coasty_run_url: 'https://coasty.ai/v1/runs/coasty_run_592014',
-                  businessName: 'Empire Logistics Solutions Corp',
-                  business_name: 'Empire Logistics Solutions Corp',
-                  state: 'NY',
-                  stateAgency: 'New York Department of State',
-                  entityNumber: '5920148',
-                  rawStatus: 'Active / Current',
-                  normalizedStatus: 'GOOD_STANDING',
-                  status: 'GOOD_STANDING',
-                  amountOwed: null,
-                  delinquency_owed: '$0.00',
-                  stepCount: 13,
-                  executionSteps: [
-                    { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-                    { stepNumber: 2, action: 'extract', description: 'Parse raw NY entity status text' }
-                  ]
-                },
-                {
-                  id: 'CS-TX-0803921841',
-                  taskId: 'coasty_run_080392',
-                  runUrl: 'https://coasty.ai/v1/runs/coasty_run_080392',
-                  coasty_run_url: 'https://coasty.ai/v1/runs/coasty_run_080392',
-                  businessName: 'Lone Star Energy Systems LLC',
-                  business_name: 'Lone Star Energy Systems LLC',
-                  state: 'TX',
-                  stateAgency: 'Texas Comptroller of Public Accounts',
-                  entityNumber: '0803921841',
-                  rawStatus: 'Not in Good Standing / Franchise Tax Balance Due',
-                  normalizedStatus: 'DELINQUENT',
-                  status: 'DELINQUENT',
-                  amountOwed: '$150.00',
-                  delinquency_owed: '$150.00',
-                  stepCount: 13,
-                  executionSteps: [
-                    { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-                    { stepNumber: 2, action: 'extract', description: 'Read outstanding TX franchise tax balance: $150.00' }
-                  ]
-                },
-                {
-                  id: 'CS-FL-P21000049281',
-                  taskId: 'coasty_run_210000',
-                  runUrl: 'https://coasty.ai/v1/runs/coasty_run_210000',
-                  coasty_run_url: 'https://coasty.ai/v1/runs/coasty_run_210000',
-                  businessName: 'Sunbiz Horizon Technologies Inc',
-                  business_name: 'Sunbiz Horizon Technologies Inc',
-                  state: 'FL',
-                  stateAgency: 'Florida Department of State (Sunbiz)',
-                  entityNumber: 'P21000049281',
-                  rawStatus: 'Active / Good Standing',
-                  normalizedStatus: 'GOOD_STANDING',
-                  status: 'GOOD_STANDING',
-                  amountOwed: null,
-                  delinquency_owed: '$0.00',
-                  stepCount: 13,
-                  executionSteps: [
-                    { stepNumber: 1, action: 'wait', description: 'Initialize Coasty browser container' },
-                    { stepNumber: 2, action: 'click', description: 'Downloaded Florida Certificate of Status PDF' }
-                  ]
-                }
-              ];
+            if (res.ok && data.success !== false) {
+              const entities = data.entities || data.results || (Array.isArray(data) ? data : []);
+              this.results = entities;
+              this.completedCount = data.completed_count || entities.length;
+              this.totalCount = data.total_count || entities.length;
+              this.progressPercent = 100;
+              if (data.summary) {
+                this.summary = data.summary;
+              }
+              const jobId = data.job_id || `job_${Date.now()}`;
+              this.activeJobId = jobId;
+              this.statusMessage = `Job ${jobId} COMPLETED cleanly (${entities.length} entities verified).`;
+            } else {
+              this.statusMessage = `Job execution failed: ${data.error || res.statusText}`;
             }
-
-            this.results = items;
-            this.completedCount = data.completed_count || items.length;
-            this.totalCount = data.total_count || items.length;
-            this.progressPercent = 100;
-            if (data.summary) {
-              this.summary = data.summary;
-            }
-            const jobId = data.job_id || `job_${Date.now()}`;
-            this.activeJobId = jobId;
-            this.statusMessage = `Job ${jobId} COMPLETED cleanly (${items.length} entities verified).`;
           } catch (err) {
             console.warn('Execution error:', err);
             this.progressPercent = 100;

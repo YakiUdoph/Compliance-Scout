@@ -126,47 +126,51 @@ app.post('/api/audit', async (req: Request, res: Response) => {
     } else if (textPayload) {
       const lines = textPayload.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
       if (lines.length > 0) {
-        const header = lines[0].split(',').map(h => h.trim().toLowerCase());
-        const nameIdx = header.indexOf('business_name');
-        const stateIdx = header.indexOf('state');
-        const entityIdx = header.indexOf('entity_number');
+        const sampleLine = lines[0];
+        let delimiter = ',';
+        if (sampleLine.includes('\t')) delimiter = '\t';
+        else if (sampleLine.includes(';')) delimiter = ';';
+        else if (sampleLine.includes('|')) delimiter = '|';
+
+        const headerTokens = lines[0].split(delimiter).map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
+
+        const nameAliases = ['business_name', 'business', 'name', 'company', 'entity_name', 'company_name'];
+        const stateAliases = ['state', 'jurisdiction', 'country', 'region', 'province'];
+        const entityAliases = ['entity_number', 'entity_no', 'registration_number', 'number', 'registration_no', 'id', 'entity_id'];
+
+        const nameIdx = headerTokens.findIndex(h => nameAliases.includes(h));
+        const stateIdx = headerTokens.findIndex(h => stateAliases.includes(h));
+        const entityIdx = headerTokens.findIndex(h => entityAliases.includes(h));
+
+        const hasHeader = nameIdx !== -1 || stateIdx !== -1 || entityIdx !== -1;
+        const startRow = hasHeader ? 1 : 0;
 
         const nameCol = nameIdx !== -1 ? nameIdx : 0;
         const stateCol = stateIdx !== -1 ? stateIdx : 1;
         const entityCol = entityIdx !== -1 ? entityIdx : 2;
 
-        for (let i = 1; i < lines.length; i++) {
-          const row = lines[i].split(',').map((c: string) => c.trim());
-          if (row.length >= 3) {
-            businesses.push({
-              business_name: row[nameCol],
-              state: row[stateCol].toUpperCase(),
-              entity_number: row[entityCol]
-            });
-          }
-        }
-      }
-    } else {
-      // Default to sample_businesses.csv if no payload provided
-      const sampleCsvPath = path.resolve(process.cwd(), 'sample_businesses.csv');
-      if (fs.existsSync(sampleCsvPath)) {
-        const content = fs.readFileSync(sampleCsvPath, 'utf-8');
-        const lines = content.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
-        for (let i = 1; i < lines.length; i++) {
-          const row = lines[i].split(',').map((c: string) => c.trim());
-          if (row.length >= 3) {
-            businesses.push({
-              business_name: row[0],
-              state: row[1].toUpperCase(),
-              entity_number: row[2]
-            });
+        for (let i = startRow; i < lines.length; i++) {
+          const rawRow = lines[i];
+          const tokens = rawRow.split(delimiter).map(c => c.trim().replace(/^["']|["']$/g, ''));
+          if (tokens.length >= 2) {
+            const nameVal = tokens[nameCol] || tokens[0] || '';
+            const stateVal = tokens[stateCol] || tokens[1] || 'GLOBAL';
+            const entityVal = tokens[entityCol] || tokens[2] || `ENT-${i}`;
+
+            if (nameVal) {
+              businesses.push({
+                business_name: nameVal,
+                state: stateVal.toUpperCase(),
+                entity_number: entityVal
+              });
+            }
           }
         }
       }
     }
 
     if (businesses.length === 0) {
-      return res.status(400).json({ error: 'No valid business entity records found in request.' });
+      return res.status(400).json({ error: 'No valid business entity records found in uploaded file.' });
     }
 
     // 1. Create job in in-memory registry
@@ -183,13 +187,35 @@ app.post('/api/audit', async (req: Request, res: Response) => {
 
     const finalJob = getJob(job.jobId) || job;
 
+    const entities = (finalJob.results || []).map(r => ({
+      business_name: r.businessName,
+      state: r.state,
+      entity_number: r.entityNumber,
+      coasty_run_id: r.taskId,
+      coasty_run_url: r.runUrl,
+      status: r.normalizedStatus,
+      delinquency_owed: r.amountOwed || '$0.00',
+
+      // Compatibility aliases
+      businessName: r.businessName,
+      taskId: r.taskId,
+      runUrl: r.runUrl,
+      normalizedStatus: r.normalizedStatus,
+      amountOwed: r.amountOwed || '$0.00',
+      summaryNote: r.summaryNote,
+      executionSteps: r.executionSteps,
+      stepCount: r.stepCount
+    }));
+
     if (finalJob.status === 'FAILED') {
       return res.status(500).json({
+        success: false,
         job_id: finalJob.jobId,
         status: finalJob.status,
         total_count: finalJob.totalCount,
         completed_count: finalJob.completedCount,
-        results: finalJob.results,
+        entities: entities,
+        results: entities,
         summary: finalJob.summary,
         active_logs: finalJob.activeLogs,
         error: finalJob.error,
@@ -204,7 +230,8 @@ app.post('/api/audit', async (req: Request, res: Response) => {
       status: finalJob.status,
       total_count: finalJob.totalCount,
       completed_count: finalJob.completedCount,
-      results: finalJob.results,
+      entities: entities,
+      results: entities,
       summary: finalJob.summary,
       active_logs: finalJob.activeLogs,
       error: finalJob.error,
