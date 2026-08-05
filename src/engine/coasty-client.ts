@@ -52,8 +52,9 @@ export class CoastyClient {
   private pollIntervalMs: number;
 
   constructor(options: CoastyClientOptions = {}) {
-    this.apiKey = options.apiKey || process.env.COASTY_API_KEY || process.env.SK_COASTY_KEY || '';
-    this.baseUrl = options.baseUrl || 'https://coasty.ai/v1';
+    const rawKey = options.apiKey || process.env.COASTY_API_KEY || process.env.SK_COASTY_KEY || '';
+    this.apiKey = rawKey.trim().replace(/^["']|["']$/g, '').trim();
+    this.baseUrl = (options.baseUrl || process.env.COASTY_BASE_URL || 'https://coasty.ai/v1').trim().replace(/\/+$/, '');
     this.pollIntervalMs = options.pollIntervalMs || 3000;
   }
 
@@ -116,10 +117,14 @@ export class CoastyClient {
               runUrl: `https://coasty.ai/v1/runs/${runId}`,
               createdAt: new Date().toISOString()
             };
+          } else {
+            const errText = await response.text().catch(() => '');
+            throw new Error(`Coasty API returned HTTP ${response.status}: ${errText || response.statusText}`);
           }
         }
       } catch (err) {
-        console.warn(`[CoastyClient] Network error connecting to coasty.ai: ${(err as Error).message}. Using local execution engine.`);
+        console.warn(`[CoastyClient] Network error connecting to coasty.ai: ${(err as Error).message}.`);
+        throw err;
       }
     }
 

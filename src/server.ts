@@ -5,7 +5,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import { BusinessInput, BusinessInputSchema } from './normalizer/schema.js';
 import { BatchComplianceRunner } from './engine/runner.js';
-import { createJob, getJob, getAllJobs } from './engine/job-store.js';
+import { createJob, getJob, getAllJobs, markJobFailed } from './engine/job-store.js';
 
 dotenv.config();
 
@@ -72,18 +72,59 @@ app.post('/api/audit', async (req: Request, res: Response) => {
   try {
     let businesses: BusinessInput[] = [];
 
+    const filePayload = (req as any).file || req.body?.file;
+    let textPayload: string | undefined = undefined;
+
+    if (filePayload) {
+      const filename = filePayload.originalname || filePayload.name || '';
+      if (/\.(csv|txt)$/i.test(filename) || !filename) {
+        if (Buffer.isBuffer(filePayload.buffer)) {
+          textPayload = filePayload.buffer.toString('utf-8');
+        } else if (typeof filePayload.content === 'string') {
+          textPayload = filePayload.content;
+        } else if (typeof filePayload.csvText === 'string') {
+          textPayload = filePayload.csvText;
+        } else if (typeof filePayload.text === 'string') {
+          textPayload = filePayload.text;
+        }
+      }
+    }
+
+    if (!textPayload) {
+      if (typeof req.body.csvText === 'string') {
+        textPayload = req.body.csvText;
+      } else if (typeof req.body.text === 'string') {
+        textPayload = req.body.text;
+      } else if (typeof req.body.content === 'string') {
+        textPayload = req.body.content;
+      } else if (typeof req.body.fileContent === 'string') {
+        textPayload = req.body.fileContent;
+      }
+    }
+
     if (Array.isArray(req.body.businesses)) {
       businesses = req.body.businesses.map((b: any) => BusinessInputSchema.parse(b));
-    } else if (typeof req.body.csvText === 'string') {
-      const lines = req.body.csvText.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
-      for (let i = 1; i < lines.length; i++) {
-        const row = lines[i].split(',').map((c: string) => c.trim());
-        if (row.length >= 3) {
-          businesses.push({
-            business_name: row[0],
-            state: row[1].toUpperCase(),
-            entity_number: row[2]
-          });
+    } else if (textPayload) {
+      const lines = textPayload.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
+      if (lines.length > 0) {
+        const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const nameIdx = header.indexOf('business_name');
+        const stateIdx = header.indexOf('state');
+        const entityIdx = header.indexOf('entity_number');
+
+        const nameCol = nameIdx !== -1 ? nameIdx : 0;
+        const stateCol = stateIdx !== -1 ? stateIdx : 1;
+        const entityCol = entityIdx !== -1 ? entityIdx : 2;
+
+        for (let i = 1; i < lines.length; i++) {
+          const row = lines[i].split(',').map((c: string) => c.trim());
+          if (row.length >= 3) {
+            businesses.push({
+              business_name: row[nameCol],
+              state: row[stateCol].toUpperCase(),
+              entity_number: row[entityCol]
+            });
+          }
         }
       }
     } else {
@@ -112,18 +153,30 @@ app.post('/api/audit', async (req: Request, res: Response) => {
     // 1. Create job in in-memory registry
     const job = createJob(businesses);
 
-    // 2. Dispatch background orchestrator thread (NON-BLOCKING DETACHED PROMISE)
-    runner.runJobAsync(job.jobId, businesses).catch(err => {
-      console.error(`[Background Job Error] Job ${job.jobId} failed:`, err);
-    });
+    // 2. Synchronously await job execution so Vercel event loop does not freeze before completion
+    try {
+      await runner.runJobAsync(job.jobId, businesses);
+    } catch (err) {
+      console.error(`[Job Error] Job ${job.jobId} failed:`, err);
+      const errorMsg = (err as Error).message || 'Batch execution failed';
+      markJobFailed(job.jobId, errorMsg);
+    }
 
-    // 3. IMMEDIATELY return HTTP 202 Accepted (< 200ms) with poll URL
+    const finalJob = getJob(job.jobId) || job;
+
+    // 3. Return HTTP 202 Accepted with updated job execution status
     return res.status(202).json({
-      job_id: job.jobId,
-      status: job.status,
-      total_count: job.totalCount,
-      poll_url: `/api/status/${job.jobId}`,
-      message: 'Job accepted and queued for background Coasty browser execution.'
+      job_id: finalJob.jobId,
+      status: finalJob.status,
+      total_count: finalJob.totalCount,
+      completed_count: finalJob.completedCount,
+      results: finalJob.results,
+      summary: finalJob.summary,
+      error: finalJob.error,
+      poll_url: `/api/status/${finalJob.jobId}`,
+      message: finalJob.status === 'FAILED'
+        ? `Job failed: ${finalJob.error}`
+        : 'Job accepted and executed cleanly.'
     });
   } catch (error) {
     console.error(`[Backend API Audit Dispatch Error]`, error);
@@ -131,8 +184,13 @@ app.post('/api/audit', async (req: Request, res: Response) => {
   }
 });
 
-// If executing directly (not imported as serverless function handler)
-if (process.env.NODE_ENV !== 'production' || process.argv[1]?.endsWith('server.js') || process.argv[1]?.endsWith('server.ts')) {
+// If executing directly (not imported as module)
+const isDirectExecution = Boolean(
+  process.argv[1] && 
+  (path.basename(process.argv[1]) === 'server.js' || path.basename(process.argv[1]) === 'server.ts')
+);
+
+if (isDirectExecution) {
   app.listen(PORT, () => {
     console.log(`
 \x1b[32m  🛡️ COMPLIANCESCOUT Server Running on http://localhost:${PORT}\x1b[0m

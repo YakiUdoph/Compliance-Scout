@@ -180,6 +180,11 @@ export class BatchComplianceRunner {
       }
     }
 
+    const firstError = results.find(r => r.rawStatus === 'Evaluation Error')?.summaryNote;
+    if (results.length > 0 && results.every(r => r.rawStatus === 'Evaluation Error')) {
+      throw new Error(firstError || 'Coasty API execution failed for all target entities.');
+    }
+
     return {
       totalProcessed: results.length,
       goodStandingCount,
