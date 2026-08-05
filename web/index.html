@@ -789,7 +789,8 @@
                 });
 
                 if (liveRes.ok) {
-                  const item = await liveRes.json();
+                  const payload = await liveRes.json();
+                  const item = payload.entity ? { ...payload.entity, ...payload } : payload;
                   this.results.push(item);
                 } else {
                   // Fallback item if single endpoint fails
