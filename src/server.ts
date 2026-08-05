@@ -22,7 +22,61 @@ if (fs.existsSync(webDir)) {
   app.use(express.static(webDir));
 }
 
+import { CoastyWorkflowEvaluator } from './engine/evaluator.js';
+import { parseEntityStatus } from './normalizer/parser.js';
+
 const runner = new BatchComplianceRunner({ concurrency: 3 });
+const singleEvaluator = new CoastyWorkflowEvaluator();
+
+/**
+ * POST /api/audit-live — Accepts single entity target { business_name, state, entity_number },
+ * calls Coasty REST API / computer-use runner and returns HTTP 200 with live audit metrics.
+ */
+app.post('/api/audit-live', async (req: Request, res: Response) => {
+  try {
+    const business_name = req.body.business_name || req.body.businessName || req.body.name || '';
+    const state = (req.body.state || req.body.jurisdiction || 'US').toUpperCase();
+    const entity_number = req.body.entity_number || req.body.entityNumber || req.body.number || '12345';
+
+    if (!business_name) {
+      return res.status(400).json({ error: 'business_name is required.' });
+    }
+
+    const business: BusinessInput = { business_name, state, entity_number };
+    const evalOutput = await singleEvaluator.evaluateEntity(business);
+
+    const normalized = parseEntityStatus(
+      evalOutput.rawStatusText + (evalOutput.rawAmountOwedText ? ` Fees Owed: ${evalOutput.rawAmountOwedText}` : '')
+    );
+
+    const rawOwed = (normalized.amountOwed || evalOutput.rawAmountOwedText || '0.00').replace(/[^0-9.]/g, '');
+    const delinquency_owed = rawOwed && rawOwed !== '0.00' ? (rawOwed.includes('.') ? rawOwed : rawOwed + '.00') : '0.00';
+    const coasty_run_url = evalOutput.runUrl && evalOutput.runUrl.includes('coasty.ai') ? evalOutput.runUrl : `https://coasty.ai/runs/${evalOutput.taskId}`;
+
+    return res.status(200).json({
+      success: true,
+      business_name: business.business_name,
+      businessName: business.business_name,
+      state: business.state,
+      entity_number: business.entity_number,
+      entityNumber: business.entity_number,
+      coasty_run_id: evalOutput.taskId,
+      taskId: evalOutput.taskId,
+      coasty_run_url: coasty_run_url,
+      runUrl: coasty_run_url,
+      status: normalized.status,
+      normalizedStatus: normalized.status,
+      delinquency_owed: delinquency_owed,
+      amountOwed: normalized.amountOwed || '$0.00',
+      summaryNote: normalized.summaryNote,
+      executionSteps: evalOutput.executionSteps,
+      stepCount: evalOutput.stepCount
+    });
+  } catch (err) {
+    console.error(`[POST /api/audit-live Error]`, err);
+    return res.status(500).json({ error: (err as Error).message });
+  }
+});
 
 /**
  * GET /api/status/:job_id or GET /api/status — Instant job state lookup with serverless fallback
